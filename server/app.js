@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const userInfoRoute = require("./routes/userInfo");
 const authRoute = require("./routes/auth");
+const postRoute = require("./routes/posts");
 
 const app = express();
 const port = 4000;
@@ -15,5 +16,6 @@ app.use(express.json())
 
 app.use('/userInfo', userInfoRoute);
 app.use('/auth', authRoute);
+app.use('/posts', postRoute);
 
 app.listen(port, () => console.log("Server is running.")); //runs automatically
