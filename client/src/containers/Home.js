@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Header from "../components/Header"
-import AlbumInfo from "../components/AlbumInfo"
+import Header from "../components/Header/Header"
+import AlbumInfo from "../components/AlbumInfo/AlbumInfo"
 
 function Home() {
     const [userdb, setUserdb] = useState([]);
