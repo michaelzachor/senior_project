@@ -7,8 +7,8 @@ function MyMusic() {
 
     useEffect(()=>{
         const fetchUserdb = async () => {
-            const res = axios.get("https://localhost:4000/posts/userdb/") // add userId
-            console.log(res)
+            const res = await axios.get("http://localhost:4000/posts/userdb/621e3c3ff8db05b397dfe262") // add userId
+            console.log(res.data)
             setUserdb(res.data);
         }
         fetchUserdb();
@@ -18,9 +18,11 @@ function MyMusic() {
         <div className='MyMusic'>
             <Header />
             <h1>Check2</h1>
-            {/* {userdb.map((d) => (
-                <Item key={d.id} data={d} />
-            ))} */}
+            {userdb.map((item, i) => (
+                <div key={i}>
+                    {item.releaseTitle}
+                </div>
+            ))}
         </div>
     )
 }
