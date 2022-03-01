@@ -19,10 +19,10 @@
     text-align: right;
     /* border: 1px solid red; */
 }
+
 .albumContent {
     flex: 6;
     margin: 10px;
-    /* border: 1px solid black; */
 }
 
 .albumCover {
@@ -38,3 +38,56 @@
 .albumArtist {
     text-align: center;
 }
+
+.albumTracks {
+    display: none;
+}
+
+.albumRating {
+    display: block;
+}
+
+/* ROTATION
+.albumContent {
+    flex: 6;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+.albumContent.flip {
+    transform: rotateY(180deg);
+}
+
+.albumCover {
+    max-width: 200px;
+    margin: 10px auto;
+    display: block;
+}
+
+.albumTitle {
+    text-align: center;
+}
+
+.albumArtist {
+    text-align: center;
+}
+
+.albumFront,
+.albumBack {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  position: absolute;
+}
+
+.albumFront {
+    transform: rotateX(0deg);
+    -webkit-transform: rotateX(0deg);
+}
+
+.albumBack {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+}
+*/

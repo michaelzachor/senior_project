@@ -1,6 +1,8 @@
 import React from 'react';
+import "./header.css";
 
-function Header() {
+
+function Header() { 
     return (
         <header className="Header">
             <div className="headerLeft">
