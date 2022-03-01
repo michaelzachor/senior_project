@@ -11,10 +11,9 @@ cards.forEach((card) => card.addEventListener("click", flipCard));
 const a = document.getElementsByClassName
 */
 
-let albumRating = document.getElementsByClassName("albumRating")[0];
-let albumTracks = document.getElementsByClassName("albumTracks")[0];
-
 function showMore() {
+    let albumRating = document.getElementsByClassName("albumRating")[0];
+    let albumTracks = document.getElementsByClassName("albumTracks")[0];
     if (albumRating.style.display === "block") {
         albumRating.style.display = "none";
         albumTracks.style.display = "block";

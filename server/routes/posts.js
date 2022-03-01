@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
-        if (post.userEmail === req.body.userEmail) {
+        if (post.userId === req.body.userId) {
             await post.updateOne({$set:req.body});
             res.status(200).json("the post has been updated")
         } else {
@@ -40,10 +40,10 @@ router.get("/:id", async (req, res) => {
 })
 
 //get all posts
-router.get("/userdb/all", async (req, res) => {
+router.get("/userdb/:userId", async (req, res) => {
     // let postArray = [];
     try {
-        const currentUser = await User.findById(req.body.userId)
+        const currentUser = await User.findById(req.params.userId)
         const userPosts = await Post.find({ userId:currentUser._id})
         // console.log(currentUser.email);
         res.json(userPosts)
