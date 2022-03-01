@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const userInfoRoute = require("./routes/userInfo");
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
+const albumRoute = require("./routes/albums")
 
 const app = express();
 const port = 4000;
@@ -26,5 +27,6 @@ app.use(function (req, res, next) {
 app.use('/userInfo', userInfoRoute);
 app.use('/auth', authRoute);
 app.use('/posts', postRoute);
+app.use('/albums', albumRoute);
 
 app.listen(port, () => console.log("Server is running.")); //runs automatically

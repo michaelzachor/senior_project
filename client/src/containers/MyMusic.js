@@ -17,7 +17,6 @@ function MyMusic() {
     return (
         <div className='MyMusic'>
             <Header />
-            <h1>Check2</h1>
             {userdb.map((item, i) => (
                 <div key={i}>
                     {item.releaseTitle}
