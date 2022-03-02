@@ -7,7 +7,7 @@ function MyMusic() {
 
     useEffect(()=>{
         const fetchUserdb = async () => {
-            const res = await axios.get("http://localhost:4000/posts/userdb/621e3c3ff8db05b397dfe262") // add userId
+            const res = await axios.get("http://localhost:4000/albums/userdb/621e3c3ff8db05b397dfe262") // add userId
             console.log(res.data)
             setUserdb(res.data);
         }
