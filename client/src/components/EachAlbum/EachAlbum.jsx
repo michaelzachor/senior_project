@@ -14,14 +14,14 @@ function showMore() {
     }
 }
 
-function EachAlbum() {
+function EachAlbum({album}) {
     return (
         <div className="albumContent">
             <div className="albumFront">
                 <div className="albumInfo">
                     <img className="albumCover" src={samplePic} onClick={showMore}></img>
-                    <h1 className="albumTitle">Ann Steel Album</h1>
-                    <h2 className="albumArtist">Ann Steel</h2>
+                    <h1 className="albumTitle">{album ? album.title : "loading album title"}</h1>
+                    <h2 className="albumArtist">{album ? album.artistNames[0] : "loading artists"}</h2>
                 </div>
                 <div className="albumRating">
                     <label>Rating</label>
