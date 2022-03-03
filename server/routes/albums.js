@@ -19,12 +19,8 @@ router.post('/', async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const album = await Album.findById(req.params.id);
-        // if (album.userData.userId === req.body.userData.userId) {
-            await album.updateOne({$set:req.body});
-            res.status(200).json("the album has been updated")
-        // } else {
-            // res.status(403).json("you can only update albums in your database")
-        // }
+        await album.updateOne({$set:req.body});
+        res.status(200).json("the album has been updated")
     } catch(err) {
         res.status(500).json(err)
     }  
@@ -33,6 +29,7 @@ router.put("/:id", async (req, res) => {
 // get album
 router.get("/:id", async (req, res) => {
     try {
+        console.log(req.params.id)
         const album = await Album.findById(req.params.id);
         res.status(200).json(album);
     } catch(err) {
@@ -45,11 +42,8 @@ router.get("/userdb/:userId", async (req, res) => {
     // let postArray = [];
     try {
         const currentUser = await User.findById(req.params.userId)
-        const userAlbums = await Album.find({ userId:currentUser._id})
-        // console.log(currentUser.email);
-        res.json(userAlbums)
-        // res.send(req.body._id)
-        // res.send(currentUser.value)
+        const userAlbums = await Album.find({ userId:currentUser._id});
+        res.status(200).json(userAlbums);
     } catch(err) {
         res.status(500).json(err);
     }

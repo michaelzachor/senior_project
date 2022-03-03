@@ -3,7 +3,11 @@ const UserData = require("./UserData").schema;
 
 const AlbumSchema = new mongoose.Schema(
     {
-        id: {
+        userId: {
+            type:String,
+            required:true
+        },
+        spotifyId: {
             type:String,
             required:true
         },
@@ -11,7 +15,7 @@ const AlbumSchema = new mongoose.Schema(
             type:[String],
             required:true
         },
-        artistIds: {
+        artistSpotifyIds: {
             type:[String],
             required:true
         },
@@ -23,7 +27,7 @@ const AlbumSchema = new mongoose.Schema(
             type:[String],
             required:true
         },
-        trackIds: {
+        trackSpotifyIds: {
             type:[String],
             required:true
         },
