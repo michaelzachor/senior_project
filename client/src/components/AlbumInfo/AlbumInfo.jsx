@@ -30,7 +30,7 @@ function AlbumInfo() {
         console.log("db",userdb);
     }, [])
 
-    useEffect(()=>{
+    useEffect(()=>{ 
         setCurrentAlbum(userdb[albumCount])
     }, [userdb, albumCount])
 
@@ -40,8 +40,6 @@ function AlbumInfo() {
         <div className="AlbumInfo">
             <div className="leftArrow">&#60;</div>
             <div className="middleSection">
-                {/* <h1>{userdb[0].title}</h1> */}
-                {/* <h1>{currentAlbum.title}</h1> */}
                 <EachAlbum album={currentAlbum}/>
             </div>
             <div className="rightArrow" onClick={() => setAlbumCount(albumCount+1)}>&#62;</div>
