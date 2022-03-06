@@ -11,7 +11,14 @@ function MyMusic() {
         const fetchUserdb = async () => {
             const res = await axios.get("http://localhost:4000/albums/userdb/6220fc41b82cfe6798c7da50") // add userId
             console.log("data",res.data)
-            setUserdb(res.data);
+            let markedData = [];
+            let i = 0;
+            while (res.data[i]) {
+                if (res.data[i].marked) markedData.push(res.data[i]);
+                i++;
+            }
+            console.log("newdata",markedData)
+            setUserdb(markedData);
         }
         fetchUserdb();
         // console.log("user db rendered")
@@ -22,6 +29,7 @@ function MyMusic() {
     return (
         <div className='MyMusic'>
             <Header />
+            <h2>Recently Logged</h2>
             <table>
             {userdb && userdb.map((album, i) => (
                 <tbody key={i}>

@@ -8,6 +8,7 @@ function AlbumInTable({album}) {
             <td>Img</td>
             <td>{album ? album.title : "loading album title"}</td>
             <td>{album ? album.artistNames[0] : "loading album artist"}</td>
+            <td>{album ? album.year : "loading album year"}</td>
         </tr>
     );
 }

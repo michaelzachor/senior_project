@@ -23,7 +23,14 @@ function AlbumInfo() {
         const fetchUserdb = async () => {
             const res = await axios.get("http://localhost:4000/albums/userdb/6220fc41b82cfe6798c7da50") // add userId
             console.log("data",res.data)
-            setUserdb(res.data);
+            let unMarkedData = [];
+            let i = 0;
+            while (res.data[i]) {
+                if (!res.data[i].marked) unMarkedData.push(res.data[i]);
+                i++;
+            }
+            console.log("newdata",unMarkedData)
+            setUserdb(unMarkedData);
         }
         fetchUserdb();
         // console.log("user db rendered")
@@ -31,7 +38,7 @@ function AlbumInfo() {
     }, [])
 
     useEffect(()=>{ 
-        setCurrentAlbum(userdb[albumCount])
+        setCurrentAlbum(userdb[albumCount]);
     }, [userdb, albumCount])
 
     console.log(currentAlbum);
@@ -42,6 +49,9 @@ function AlbumInfo() {
             <div className="middleSection">
                 <EachAlbum album={currentAlbum}/>
             </div>
+            {/* <div className="rightArrow" onClick={() => {
+                do setAlbumCount(albumCount+1)
+                while (currentAlbum.marked)}}>&#62;</div> */}
             <div className="rightArrow" onClick={() => setAlbumCount(albumCount+1)}>&#62;</div>
         </div>
     );

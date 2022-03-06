@@ -10,6 +10,9 @@ const UserDataSchema = new mongoose.Schema(
         //     type: String,
         //     required: true
         // },
+        dateLogged: {
+            type:Date
+        },
         rating: {
             type: Number
         },
