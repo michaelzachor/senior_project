@@ -25,7 +25,16 @@ function MyMusic() {
         console.log("db",userdb);
     }, [])
 
-    if (userdb) console.log(userdb)
+    function renderTableData(album) {
+        return (
+            <tr>
+                <td>Img</td>
+                <td>{album ? album.title : "loading album title"}</td>
+                <td>{album ? album.artistNames[0] : "loading album artist"}</td>
+                <td>{album ? album.year : "loading album year"}</td>
+            </tr>
+        )
+    }
     return (
         <div className='MyMusic'>
             <Header />
@@ -33,7 +42,8 @@ function MyMusic() {
             <table>
             {userdb && userdb.map((album, i) => (
                 <tbody key={i}>
-                    <AlbumInTable album={album}/>
+                    {renderTableData(album)}
+                    {/* <AlbumInTable album={album}/> */}
                 </tbody>
             ))}
             </table>

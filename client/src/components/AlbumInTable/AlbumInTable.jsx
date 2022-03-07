@@ -4,12 +4,14 @@ import "./albumintable.css";
 
 function AlbumInTable({album}) {
     return (
-        <tr>
-            <td>Img</td>
-            <td>{album ? album.title : "loading album title"}</td>
-            <td>{album ? album.artistNames[0] : "loading album artist"}</td>
-            <td>{album ? album.year : "loading album year"}</td>
-        </tr>
+        <>
+            <tr style={{margin : '100px'}}>
+                <td>Img</td>
+                <td>{album ? album.title : "loading album title"}</td>
+                <td>{album ? album.artistNames[0] : "loading album artist"}</td>
+                <td>{album ? album.year : "loading album year"}</td>
+            </tr>
+        </>
     );
 }
 

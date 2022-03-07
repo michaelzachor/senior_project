@@ -24,6 +24,15 @@
     display: block;
 }
 
+input[type='radio'] {
+    display: none;
+}
+
+.star {
+    cursor: pointer;
+    transition: color 200ms;
+}
+
 /* ROTATION
 .albumContent {
     flex: 6;

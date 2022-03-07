@@ -1,7 +1,16 @@
-table {
-    border: 1px solid gray;
-}
+/* table { */
+    /* border: 1px solid gray; */
+/* } */
 
-tr:nth-child(even) {
+/* tr {
+    background-color: red;
+    border: 2px solid black;
+} */
+
+/* td {
+    background-color: red;
+} */
+
+/* tr:nth-child(even) {
     background-color: #dddddd;
-}
+} */

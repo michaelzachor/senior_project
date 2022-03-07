@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
+// import Picker from 'emoji-picker-react';
+import {FaStar} from 'react-icons/fa';
 import samplePic from "../../assets/samplePic.jpeg";
 import "./eachalbum.css";
+import axios from "axios";
 
 function showMore() {
     let albumRating = document.getElementsByClassName("albumRating")[0];
@@ -15,6 +18,27 @@ function showMore() {
 }
 
 function EachAlbum({album}) {
+//     const [chosenEmoji, setChosenEmoji] = useState(null);
+
+//     const onEmojiClick = (event, emojiObject) => {
+//         setChosenEmoji(emojiObject);
+//     };
+
+    const [rating, setRating] = useState(null);
+    // const [hover, setHover] = useState(null);
+
+    // const [albumUserdata, setAlbumUserdata] = useState({});
+
+    // useEffect(()=>{
+    //     console.log(albumUserdata);
+    //     axios.put("http://localhost:4000/albums/" + album._id , { marked:true, userData:albumUserdata });
+    // }, [albumUserdata])
+
+    const updateAlbum = (updatedData)=> {
+        console.log(updatedData)
+        axios.put("http://localhost:4000/albums/" + album._id , { marked:true, userData:updatedData });
+    }
+
     return (
         <div className="albumContent">
             <div className="albumFront">
@@ -24,22 +48,51 @@ function EachAlbum({album}) {
                     <h2 className="albumArtist">{album ? album.artistNames[0] : "loading artists"}</h2>
                 </div>
                 <div className="albumRating">
-                    <label>Rating</label>
-                    <div>&#9733;&#9733;&#9733;&#9733;&#9734;</div>
-                    <label>Emojis</label>
-                    <div></div>
-                    <label>Tags</label>
-                    <input placeholder=''></input>
+                    <div>
+                        <label>Rating</label>
+                        {[...Array(5)].map((star, i) => {
+                            const ratingValue = i+1;
+                            return (
+                                <label key={i}>
+                                    <input type="radio" 
+                                        name="rating" 
+                                        value={ratingValue} 
+                                        onClick={()=>setRating(ratingValue)}
+                                    />
+                                    <FaStar className="star" 
+                                        color={ratingValue <= rating ? '#ffc107' : '#e4e5e9'}
+                                    />
+                                </label>
+                            );
+                        })}
+                    </div>
+                    {/* <div>&#9733;&#9733;&#9733;&#9733;&#9734;</div> */}
+                    {/* <label>Emojis</label>
+                    <div>
+                        {chosenEmoji ? (
+                            <span>You chose: {chosenEmoji.emoji}</span>
+                        ) : (
+                            <span>No emoji Chosen</span>
+                        )}
+                        <Picker onEmojiClick={onEmojiClick} />
+                    </div> */}
+                    <div>
+                        <label>Tags</label>
+                        <input placeholder=''></input>
+                    </div>
                 </div>
+
                 <div className="albumTracks">
                     <ol>
-                        <li>Find Your Way</li>
-                        <li>Quite Still</li>
-                        <li>Sport et divertissement</li>
-                        <li>Southafternoon</li>
-                        <li>My Time</li>
+                        {album && album.trackNames.map((track, i) => (
+                            <li key={i}>{track}</li>
+                        ))}
                     </ol>
                 </div>
+                {/* <button onClick={() => setAlbumUserdata({
+                    rating:rating
+                })}>Log this album</button> */}
+                <button onClick={() => updateAlbum({rating:rating})}>Log this album</button>
             </div>
             {/* <div className="albumBack">
 

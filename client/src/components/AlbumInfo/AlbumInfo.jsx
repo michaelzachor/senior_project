@@ -45,7 +45,7 @@ function AlbumInfo() {
 
     return (
         <div className="AlbumInfo">
-            <div className="leftArrow">&#60;</div>
+            <div className="leftArrow" onClick={() => setAlbumCount(albumCount-1)}>&#60;</div>
             <div className="middleSection">
                 <EachAlbum album={currentAlbum}/>
             </div>
