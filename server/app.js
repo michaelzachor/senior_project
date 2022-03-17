@@ -5,7 +5,6 @@ const userInfoRoute = require("./routes/userInfo");
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
 const albumRoute = require("./routes/albums")
-const cors = require("cors");
 
 const app = express();
 const port = 4000;
@@ -17,18 +16,13 @@ mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopolo
 app.use(express.json())
 
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
 });
-
-app.use(cors({
-  origin: '*',
-  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
-}))
 
 app.use('/userInfo', userInfoRoute);
 app.use('/auth', authRoute);

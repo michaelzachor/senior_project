@@ -31,6 +31,7 @@ router.get("/:id", async (req, res) => {
     try {
         console.log(req.params.id)
         const album = await Album.findById(req.params.id);
+        console.log(album);
         res.status(200).json(album);
     } catch(err) {
         res.status(500).json(err);
