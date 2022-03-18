@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Track = require("./Track").schema;
 const UserData = require("./UserData").schema;
 
 const AlbumSchema = new mongoose.Schema(
@@ -23,6 +24,12 @@ const AlbumSchema = new mongoose.Schema(
             type:String,
             required:true
         },
+        
+        tracks: {
+            type:[Track],
+            required:true
+        },
+        /*
         trackNames: {
             type:[String],
             required:true
@@ -31,6 +38,7 @@ const AlbumSchema = new mongoose.Schema(
             type:[String],
             required:true
         },
+        */
         img:{
             type:String
         },

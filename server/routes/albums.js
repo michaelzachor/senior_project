@@ -50,4 +50,20 @@ router.get("/userdb/:userId", async (req, res) => {
     }
 })
 
+// delete album
+router.delete("/:id", async (req,res) => {
+    try {
+        const album = await Album.findById(req.params.id);
+        //res.json(album);
+        if (album.userId == req.body.userId) {
+            await album.deleteOne();
+            res.status(200).json("album deleted");
+        } else {
+            res.status(403).json("can only delete your own album");
+        }
+    } catch(err) {
+            res.status(500).json(err);
+    }
+})
+
 module.exports = router;

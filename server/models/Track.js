@@ -1,7 +1,45 @@
 const mongoose = require("mongoose");
-const UserData = require("./UserData");
+const UserData = require("./UserData").schema;
 
-const TrackSchema = new mongoose.Schema(
+const TrackSchema = new mongoose.Schema( 
+    {
+        userId: {
+            type:String,
+            required:true
+        },
+        spotifyId: {
+            type:String,
+            required:true
+        },
+        title: {
+            type:String,
+            required:true
+        },
+        artistNames: {
+            type:[String],
+            required:true
+        },
+        artistSpotifyIds: {
+            type:[String],
+            required:true
+        },
+        albumSpotifyId: {
+            type:String,
+            required:true
+        },
+        marked: {
+            type:Boolean,
+            required:true,
+            default:false
+        },
+        userData: {
+            type:UserData,
+            default: {}
+        }
+    },
+    { timestamps:true }
+);
+/*
     {
         id: {
             type:String,
@@ -45,5 +83,6 @@ const TrackSchema = new mongoose.Schema(
     },
     { timestamps:true }
 );
+*/
 
 module.exports = mongoose.model("Track", TrackSchema)

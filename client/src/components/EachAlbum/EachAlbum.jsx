@@ -37,6 +37,7 @@ function EachAlbum({album}) {
     const updateAlbum = (updatedData)=> {
         console.log(updatedData)
         axios.put("http://localhost:4000/albums/" + album._id , { marked:true, userData:updatedData });
+        
     }
 
     return (
@@ -84,11 +85,11 @@ function EachAlbum({album}) {
 
                 <div className="albumTracks">
                     <ul>
-                        {album && album.trackNames.map((track, i) => (
+                        {album && album.tracks.map((track, i) => (
                             <li key={i} >
                                 <div className="trackNoNamePlus"> 
                                     <span className="trackNo">{i+1}</span>
-                                    <span className="trackName">{track}</span>
+                                    <span className="trackName">{track.title}</span>
                                     <span className="plus" onClick={()=> {
                                         let thisEl = document.getElementsByClassName("albumTracks")[0];
                                         let tRating = thisEl.getElementsByClassName("trackRating")[i];

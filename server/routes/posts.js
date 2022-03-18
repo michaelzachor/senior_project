@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const Post = require("../models/Post");
+// const Post = require("../models/Post");
 const User = require("../models/User");
-
+/*
 //make post
 router.post('/', async (req, res) => {
     const newPost = new Post(req.body)
@@ -53,5 +53,5 @@ router.get("/userdb/:userId", async (req, res) => {
         res.status(500).json(err);
     }
 })
-
+*/
 module.exports = router;
