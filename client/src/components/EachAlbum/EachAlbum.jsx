@@ -24,7 +24,8 @@ function EachAlbum({album}) {
 //         setChosenEmoji(emojiObject);
 //     };
 
-    const [rating, setRating] = useState(null);
+    const [albumRating, setAlbumRating] = useState(null);
+    const [trackRatings, setTrackRatings] = useState([]);
     // const [hover, setHover] = useState(null);
 
     // const [albumUserdata, setAlbumUserdata] = useState({});
@@ -35,9 +36,48 @@ function EachAlbum({album}) {
     // }, [albumUserdata])
 
     const updateAlbum = (updatedData)=> {
-        console.log(updatedData)
-        axios.put("http://localhost:4000/albums/" + album._id , { marked:true, userData:updatedData });
+        console.log(updatedData);
+
+        /*
+        axios.put("http://localhost:4000/albums/" + album._id , { 
+            marked:true, 
+            userData:updatedData
+        });
+        */
+
+
+        axios.put("http://localhost:4000/albums/" + album._id , { 
+            albumUserData:updatedData[0],
+            tracksUserData:updatedData[1]
+        });
         
+        /*
+        axios.put("http://localhost:4000/albums/" + album._id, async (req, res) => { 
+            try {
+                const album = await Album.findById(req.params.id);
+                await album.updateOne({$set:req.body});
+                res.status(200).json("the album has been updated")
+            } catch(err) {
+                res.status(500).json(err)
+            } 
+            albumUserData:updatedData[0],
+            tracksUserData:updatedData[1]
+
+            marked:true, 
+            userData:updatedData[0],
+            tracks:
+        });
+
+        router.put("/:id", async (req, res) => {
+            try {
+                const album = await Album.findById(req.params.id);
+                await album.updateOne({$set:req.body});
+                res.status(200).json("the album has been updated")
+            } catch(err) {
+                res.status(500).json(err)
+            }  
+        })
+        */
     }
 
     return (
@@ -49,23 +89,27 @@ function EachAlbum({album}) {
                     <h2 className="albumArtist">{album ? album.artistNames[0] : "loading artists"}</h2>
                 </div>
                 <div className="albumRating">
-                    <div>
-                        <label>Rating</label>
+                    <div className="albumRatingSection">
+                        <label className="albumRatingLabel">Rating</label>
+                        <div className="albumRatingInput">
                         {[...Array(5)].map((star, i) => {
-                            const ratingValue = i+1;
+                            const albumRatingValue = i+1;
                             return (
                                 <label key={i}>
-                                    <input type="radio" 
-                                        name="rating" 
-                                        value={ratingValue} 
-                                        onClick={()=>setRating(ratingValue)}
+                                    <input 
+                                        className="albumRating" 
+                                        type="radio" 
+                                        name="albumRating" 
+                                        value={albumRatingValue} 
+                                        onClick={()=>setAlbumRating(albumRatingValue)}
                                     />
                                     <FaStar className="star" 
-                                        color={ratingValue <= rating ? '#ffc107' : '#e4e5e9'}
+                                        color={albumRatingValue <= albumRating ? '#ffc107' : '#e4e5e9'}
                                     />
                                 </label>
                             );
                         })}
+                        </div>
                     </div>
                     {/* <div>&#9733;&#9733;&#9733;&#9733;&#9734;</div> */}
                     {/* <label>Emojis</label>
@@ -77,16 +121,20 @@ function EachAlbum({album}) {
                         )}
                         <Picker onEmojiClick={onEmojiClick} />
                     </div> */}
-                    <div>
-                        <label>Tags</label>
-                        <input placeholder=''></input>
+                    <div className="albumRatingSection">
+                        <label className="albumRatingLabel">Tags</label>
+                        <input className='albumTags albumRatingInput' placeholder=''></input>
+                    </div>
+                    <div className="albumRatingSection albumJournalSection">
+                        <label className="albumRatingLabel journalLabel">Journal</label>
+                        <textarea className='albumJournal albumRatingInput' placeholder=''></textarea>
                     </div>
                 </div>
 
                 <div className="albumTracks">
                     <ul>
                         {album && album.tracks.map((track, i) => (
-                            <li key={i} >
+                            <li key={i}>
                                 <div className="trackNoNamePlus"> 
                                     <span className="trackNo">{i+1}</span>
                                     <span className="trackName">{track.title}</span>
@@ -97,38 +145,32 @@ function EachAlbum({album}) {
                                         else tRating.style.display = "none";
                                     }}>+</span>
                                 </div>
-                                <div className="trackRating">
+                                <div className={"trackRating " + i}>
                                     <div>
                                         <label>Rating</label>
                                         {[...Array(5)].map((star, s) => {
-                                            const ratingValue = s+1;
+                                            const trackRatingValue = s+1;
                                             return (
                                                 <label key={s}>
-                                                    <input type="radio" 
-                                                        name="rating" 
-                                                        value={ratingValue} 
-                                                        onClick={()=>setRating(ratingValue)}
+                                                    <input 
+                                                        className={"trackStars " + i}
+                                                        type="radio" 
+                                                        name="trackRating" 
+                                                        value={trackRatingValue} 
+                                                        onClick = {() => {
+                                                            setTrackRatings([...trackRatings, trackRatingValue])
+                                                        }}
                                                     />
                                                     <FaStar className="star" 
-                                                        color={ratingValue <= rating ? '#ffc107' : '#e4e5e9'}
+                                                        color={trackRatingValue <= trackRatings[i] ? '#ffc107' : '#e4e5e9'}
                                                     />
                                                 </label>
                                             );
                                         })}
                                     </div>
-                                    {/* <div>&#9733;&#9733;&#9733;&#9733;&#9734;</div> */}
-                                    {/* <label>Emojis</label>
-                                    <div>
-                                        {chosenEmoji ? (
-                                            <span>You chose: {chosenEmoji.emoji}</span>
-                                        ) : (
-                                            <span>No emoji Chosen</span>
-                                        )}
-                                        <Picker onEmojiClick={onEmojiClick} />
-                                    </div> */}
                                     <div>
                                         <label>Tags</label>
-                                        <input placeholder=''></input>
+                                        <input className='trackTags' placeholder=''></input>
                                     </div>
                                 </div>
                             </li> 
@@ -138,19 +180,29 @@ function EachAlbum({album}) {
                 {/* <button onClick={() => setAlbumUserdata({
                     rating:rating
                 })}>Log this album</button> */}
-                <button onClick={() => updateAlbum({rating:rating})}>Log this album</button>
+                {/*
+                <button onClick={() => {
+                    //let taggedTracks = [];
+                    let taggedTracks = {};
+                    let allTracks = document.getElementsByClassName('trackRating');
+                    let j = 0;
+                    while (allTracks[j]) {
+                        let jStars = allTracks[j].getElementsByClassName('trackStars').value;
+                        let jTags = allTracks[j].getElementsByClassName('trackTags').value;
+                        if (jStars || jTags) {
+                            //taggedTracks.push({j:[jStars, jTags]}); //tags, stars. taggedTracks is gonna be an array of objects that have index numbers as key and stars, tags as values.})
+                            taggedTracks[j] = {rating:jStars, tags:jTags}
+                        }
+                        j++;
+                    }
+                    updateAlbum([
+                        {rating:albumRating, tags:document.getElementsByClassName('albumTags').value},
+                        taggedTracks
+                    ])}}>
+                    Log this album
+                </button>
+                */}
             </div>
-            {/* <div className="albumBack">
-
-                <ol>
-                    <li>Find Your Way</li>
-                    <li>Quite Still</li>
-                    <li>Sport et divertissement</li>
-                    <li>Southafternoon</li>
-                    <li>My Time</li>
-
-                </ol>
-            </div> */}
         </div>
     );
 }

@@ -3,6 +3,11 @@ const router = require("express").Router();
 const User = require("../models/User");
 const Album = require("../models/Album");
 
+// check if working 
+router.get('/', (req, res) => {
+    res.send("Hello it's album routes"); //runs if we make a get request
+});
+
 // add album to overall user db
 router.post('/', async (req, res) => {
     console.log("trying");
@@ -15,11 +20,48 @@ router.post('/', async (req, res) => {
     }
 })
 
-// update album
-router.put("/:id", async (req, res) => {
+//update album (fix)
+router.put("/fix/:id", async (req, res) => {
     try {
         const album = await Album.findById(req.params.id);
-        await album.updateOne({$set:req.body});
+        await album.updateOne({ $set: req.body });
+        res.status(200).json("the post has been updated");
+    } catch (err) {
+        res.status(500).json(err);
+    }
+  });
+
+// update album (log)
+router.put("/:id", async (req, res) => {
+    try {
+        let album = await Album.findById(req.params.id);
+        //console.log(album);
+        //album.marked = true;
+        //album.userData = req.body.albumUserData;
+        let updatedTracks = []
+        let i = 0;
+        while (album.tracks[i]) { // run through all songs on album
+            if (req.body.tracksUserData[i]) { // if song is tagged, add logged version to array
+                updatedTracks.push({
+                    marked:true,
+                    userData:req.body.tracksUserData[i]
+                })
+                //album.tracks[i].marked = true;
+                //album.tracks[i].userData = req.body.tracksUserData[i]
+            }
+            else { // else, add regular version to array
+                updatedTracks.push(album.tracks[i])
+            }
+            i++;
+        }
+        //console.log(album)
+        
+        await album.updateOne({$set:{
+            marked:true,
+            userData:req.body.albumUserData,
+            tracks:updatedTracks
+        }});
+
         res.status(200).json("the album has been updated")
     } catch(err) {
         res.status(500).json(err)
@@ -29,11 +71,10 @@ router.put("/:id", async (req, res) => {
 // get album
 router.get("/:id", async (req, res) => {
     try {
-        console.log(req.params.id)
         const album = await Album.findById(req.params.id);
-        console.log(album);
         res.status(200).json(album);
     } catch(err) {
+        console.log(err);
         res.status(500).json(err);
     }
 })

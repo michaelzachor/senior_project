@@ -6,13 +6,17 @@ function Header() {
     return (
         <header className="Header">
             <div className="headerLeft">
-                <a href="./" className="logo">M.A.</a>
+                <a href="./" className="logo">
+                    Journal
+                </a>
             </div>
             {/* <div className="headerCenter">
                 <div className="search">Search</div>
             </div> */}
             <div className="headerRight">
-                <a href="./myMusic" className="db">DB</a>
+                <a href="./myMusic" className="db">
+                    My Music
+                </a>
             </div>
             {/* <div className="navbar">
                 <nav className="navAccount">

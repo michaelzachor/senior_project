@@ -72,6 +72,36 @@ input[type='radio'] {
     /* margin: auto 0px auto 10px; */
     flex: 1;
 }
+/*
+.albumRating {
+    display: flex;
+    flex-flow: column;
+}
+*/
+.albumRatingSection {
+    margin-top: 5px;
+    display: flex;
+}
+
+.albumRatingLabel {
+    flex: 1;
+}
+
+.albumRatingInput {
+    flex: 3;
+}
+
+.albumJournalSection * {
+    vertical-align: top;
+}
+
+.journalLabel {
+    margin-top: 0px;
+}
+
+.albumJournal {
+    height: 50px;
+}
 
 /* ROTATION
 .albumContent {

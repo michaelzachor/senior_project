@@ -1,0 +1,40 @@
+.albumsInDB ul {
+    list-style-type: none;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+    padding: 0;
+}
+
+.albumsInDB li {
+    border-bottom: 1px solid #c9c9c9;
+    padding: 5px;
+}
+
+.albumsInDB li:nth-child(even) {
+    background-color: #eeeeee;
+}
+
+.albumTitleArtistYear {
+    display: flex;
+}
+
+.albumInfoDB {
+    display: none;
+}
+
+.trackNo {
+    margin: auto 10px auto 0px;
+    flex: 1;
+}
+
+.trackName {
+    flex: 12;
+}
+
+.trackRating {
+    flex: 3;
+}
+
+.trackTags {
+    flex: 5;
+}

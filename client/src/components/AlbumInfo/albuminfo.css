@@ -1,6 +1,9 @@
 .AlbumInfo {
     display: flex;
     flex-flow: row nowrap;
+    margin: 5px 10px;
+    background-color: white;
+    border-radius: 5px;
 }
 
 .leftArrow {
