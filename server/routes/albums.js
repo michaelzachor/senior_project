@@ -43,6 +43,12 @@ router.put("/:id", async (req, res) => {
         while (album.tracks[i]) { // run through all songs on album
             if (req.body.tracksUserData[i]) { // if song is tagged, add logged version to array
                 updatedTracks.push({
+                    userId:album.tracks[i].userId,
+                    spotifyId:album.tracks[i].spotifyId,
+                    title:album.tracks[i].title,
+                    artistNames:album.tracks[i].artistNames,
+                    artistSpotifyIds:album.tracks[i].artistSpotifyIds,
+                    albumSpotifyId:album.tracks[i].albumSpotifyId,
                     marked:true,
                     userData:req.body.tracksUserData[i]
                 })

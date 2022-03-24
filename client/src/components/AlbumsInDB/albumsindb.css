@@ -1,0 +1,97 @@
+.AlbumsInDB {
+    margin: 5px 10px;
+    background-color: white;
+    border-radius: 5px;
+    height: 100vh;
+}
+
+.dbSectionTitle {
+    padding: 10px;
+}
+
+.albumsInDB {
+    font-size: 14px;
+}
+
+.albumsInDB ul {
+    list-style-type: none;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+    padding: 0;
+    margin: 5px 10px;
+}
+
+.albumsInDB li {
+    border-bottom: 1px solid #c9c9c9;
+    padding: 5px;
+}
+
+.albumsInDB li:nth-child(even) {
+    background-color: #eeeeee;
+}
+
+.albumTitleArtist {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.albumTitleArtist span {
+    /* border: 1px solid orange; */
+    padding: 0 2px;
+}
+
+.albumCoverSmall {
+    margin-top: auto;
+    max-width: 40px;
+    /* margin: 10px auto; */
+    display: block;
+}
+
+.albumTitleDB {
+    font-style: italic;
+}
+/*
+.albumCoverDB {
+    flex: 1;
+}
+
+.albumArtistDB {
+    flex: 4;
+}
+
+.albumTitleDB {
+    flex: 4;
+}
+*/
+
+.plus {
+    text-align: right;
+    /* width: 100%; */
+    /* margin: auto 0px auto 10px; */
+    /* flex: 1; */
+}
+.albumInfoDB {
+    display: none;
+}
+
+.trackNoNameInfo span {
+    padding: 0 5px;
+}
+
+.trackNoDB {
+    margin: auto 6px auto 0px;
+    flex: 1;
+}
+
+.trackNameDB {
+    flex: 12;
+}
+
+.trackRatingDB {
+    flex: 3;
+}
+
+.trackTagsDB {
+    flex: 5;
+}

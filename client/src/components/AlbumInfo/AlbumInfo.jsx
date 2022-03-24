@@ -40,7 +40,8 @@ function AlbumInfo() {
     }, [])
 
     useEffect(()=>{ 
-        setCurrentAlbum(userdb[albumCount]);
+        if (userdb[albumCount]) setCurrentAlbum(userdb[albumCount]);
+        else setCurrentAlbum(null)
     }, [userdb, albumCount])
 
     console.log(currentAlbum)
@@ -52,6 +53,7 @@ function AlbumInfo() {
                 temp.push(null);
             }
             setTrackRatings(temp);
+            setAlbumRating(null);
         }
         
     }, [currentAlbum])
@@ -186,8 +188,13 @@ function AlbumInfo() {
                 updateAlbum([
                     {rating:albumRating, tags:document.getElementsByClassName('albumTags')[0].value},
                     taggedTracks
-                ])
-                setAlbumCount(albumCount+1)
+                ]);
+                let k = 0;
+                let trackTags = document.getElementsByClassName('trackTags');
+                while (trackTags[k]) trackTags.value = "";
+                document.getElementsByClassName('albumTags')[0].value = "";
+                document.getElementsByClassName('albumJournal')[0].value="";
+                setAlbumCount(albumCount+1);
                 }}>
                 <FaCaretRight size={30} color="black"/>
             </div>
