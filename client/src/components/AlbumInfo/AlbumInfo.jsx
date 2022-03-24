@@ -3,7 +3,6 @@ import "./albuminfo.css";
 import axios from "axios";
 import {FaStar} from 'react-icons/fa';
 import samplePic from "../../assets/samplePic.jpeg";
-import "../EachAlbum/eachalbum.css";
 import {FaCaretRight, FaCaretLeft} from 'react-icons/fa';
 function showMore() {
     let albumRating = document.getElementsByClassName("albumRating")[0];
@@ -24,6 +23,19 @@ function AlbumInfo() {
 
     const [albumRating, setAlbumRating] = useState(null);
     const [trackRatings, setTrackRatings] = useState([]);
+
+    const [tags, setTags] = useState([]);
+
+    const addTags = event => {
+        if (event.key === "Enter" && event.target.value !== "") {
+            setTags([...tags, event.target.value]);
+            event.target.value = "";
+        }
+    }
+
+    const removeTags = indexToRemove => {
+        setTags(tags.filter((_, index) => index !== indexToRemove))
+    }
 
     useEffect(()=>{
         const fetchUserdb = async () => {
@@ -70,13 +82,15 @@ function AlbumInfo() {
         return (
             <div className="albumContent">
                 <div className="albumFront">
+
                     <div className="albumInfo">
                         <img className="albumCover" src={samplePic} onClick={showMore}></img>
                         <h1 className="albumTitle">{album ? album.title : "loading album title"}</h1>
                         <h2 className="albumArtist">{album ? album.artistNames[0] : "loading artists"}</h2>
                     </div>
+
                     <div className="albumRating">
-                        <div className="albumRatingSection">
+                        <div className="albumRatingSection albumStarsSection">
                             <label className="albumRatingLabel">Rating</label>
                             <div className="albumRatingInput">
                             {[...Array(5)].map((star, i) => {
@@ -98,13 +112,37 @@ function AlbumInfo() {
                             })}
                             </div>
                         </div>
-                        <div className="albumRatingSection">
+                        <div className="albumRatingSection albumTagsSection">
                             <label className="albumRatingLabel">Tags</label>
-                            <input className='albumTags albumRatingInput' placeholder=''></input>
+                            <input className='albumTags albumRatingInput textInput' placeholder=''></input>
                         </div>
+
+                        <div className="albumRatingSection albumTags2Section">
+                            <label className="albumRatingLabel">Tags2</label>
+                            <div className="tags-input">
+                                <ul id="tags">
+                                    {tags.map((tag, index) => (
+                                        <li key={index} className="tag">
+                                            <span className='tag-title'>{tag}</span>
+                                            <span className='tag-close-icon'
+                                                onClick={() => removeTags(index)}>
+                                                    x
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <input
+                                    type="text"
+                                    onKeyUp={event => event.key === "Enter" ? addTags(event) : null}
+                                    placeholder="Press enter to add tags"
+                                />
+                            </div>
+                        </div>
+
+                        
                         <div className="albumRatingSection albumJournalSection">
                             <label className="albumRatingLabel journalLabel">Journal</label>
-                            <textarea className='albumJournal albumRatingInput' placeholder=''></textarea>
+                            <textarea className='albumJournal albumRatingInput textInput' placeholder=''></textarea>
                         </div>
                     </div>
 
@@ -122,8 +160,9 @@ function AlbumInfo() {
                                             else tRating.style.display = "none";
                                         }}>+</span>
                                     </div>
-                                    <div className={"trackRating " + i}>
-                                        <div>
+
+                                    <div className="trackRating">
+                                        <div className="trackRatingSection trackStarsSection">
                                             <label>Rating</label>
                                             {[...Array(5)].map((star, s) => {
                                                 const starRatingValue_t = s+1;
@@ -149,7 +188,7 @@ function AlbumInfo() {
                                                 );
                                             })}
                                         </div>
-                                        <div>
+                                        <div className="trackRatingSection trackTagsSection">
                                             <label>Tags</label>
                                             <input className='trackTags' placeholder=''></input>
                                         </div>
