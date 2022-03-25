@@ -46,7 +46,7 @@ function AlbumsInDB() {
                                         const rating = album.userData.rating;
                                         // console.log("album: ", album.title, "i: ", i, "rating: ", rating);
                                         return (
-                                            <FaStar key={i} color={i+1 <= rating ? '#ffc107' : '#e4e5e9'} />
+                                            <FaStar key={i} color={i+1 <= rating ? '#ffea00' : '#e4e5e9'} />
                                     )})}
                                 </span>
                                 <span className="plus" onClick={()=> {
@@ -70,7 +70,7 @@ function AlbumsInDB() {
                                                         const rating_t = track.userData.rating;
                                                         console.log("track: ", track, "tR ", rating_t);
                                                         return (
-                                                            <FaStar key={s} color={s+1 <= rating_t ? '#ffc107' : '#e4e5e9'} />
+                                                            <FaStar key={s} color={s+1 <= rating_t ? '#ffea00' : '#e4e5e9'} />
                                                     )})} 
                                                 </span> 
                                                 <span className="trackTagsDB">{track.marked ? track.userData.tags : "-"}</span>

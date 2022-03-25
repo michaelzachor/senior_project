@@ -2,7 +2,8 @@
     display: flex;
     flex-flow: row nowrap;
     margin: 5px 10px;
-    background-color: white;
+    /* background-color: #B1AB99; */
+    background: rgba(177, 171, 153, 0.3);
     border-radius: 5px;
 }
 
@@ -24,7 +25,7 @@
 }
 
 .middleSection {
-    flex: 6;
+    flex: 8;
 }
 
 .albumContent {
@@ -62,22 +63,22 @@ input[type='radio'] {
     transition: color 200ms;
 }
 
-.albumTracks ul {
+.albumTrackList {
     list-style-type: none;
     border: 1px solid #c9c9c9;
     border-radius: 5px;
     padding: 0;
 }
 
-.albumTracks li {
+.entireTrack {
     border-bottom: 1px solid #c9c9c9;
     padding: 5px;
 }
-
-.albumTracks li:nth-child(even) {
-    background-color: #eeeeee;
+/*
+.entireTrack:nth-child(even) {
+    background: rgba(177, 171, 153, 0.5);
 }
-
+*/
 .trackNoNamePlus {
     display: flex;
 }
@@ -92,7 +93,7 @@ input[type='radio'] {
 }
 
 .trackName {
-    flex: 12;
+    flex: 15;
 }
 
 .plus {
@@ -113,21 +114,24 @@ input[type='radio'] {
 }
 
 .albumRatingLabel {
-    flex: 1;
+    flex: 2;
 }
 
 .albumRatingInput {
-    flex: 3;
+    flex: 5;
 }
 
 .textInput {
     border-radius: 5px;
     border: 1px solid rgb(214, 216, 218);
     padding: 5px;
+    background: rgba(177, 171, 153, 0.3);
+    font-family: "Lato", "Helvetica Neue", sans-serif;
+    color: black;
 }
 .textInput:focus-within {
-    outline: 1px solid #0052cc;
-
+    outline: 1px solid #ffeaa0;
+    border: none;
 }
 
 .albumJournalSection * {
@@ -142,20 +146,35 @@ input[type='radio'] {
     height: 50px;
 }
 
+.trackRatingSection {
+    display: flex;
+}
+
+.trackRatingLabel {
+    flex: 1;
+}
+
+.trackRatingInput {
+    flex: 3;
+}
+
 /*TAGS*/
 .tags-input {
     border-radius: 5px;
     border: 1px solid rgb(214, 216, 218);
+    background: rgba(177, 171, 153, 0.3);
     padding: 2px;
-    flex: 3;
+    /* flex: 5; */
     display: flex;
     flex-wrap: wrap;
 }
 .tags-input:focus-within {
-    border: 1px solid #0052cc;
+    border: 1px solid #ffeaa0;
 }
 .tags-input input {
     border: none;
+    background: none;
+    color: black;
 }
 .tags-input input:focus {
     outline: transparent;
@@ -167,18 +186,25 @@ input[type='radio'] {
     margin-top: 0;
     margin-bottom: 0;
 }
+.tags {
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0;
+    margin-bottom: 0;
+}
 .tag {
     list-style: none;
     border-radius: 5px;
-    background: #0052cc;
+    background: #ffea00;
     padding: 2px 3px 3px 5px;
     margin: 1px;
-    color: white;
+    color: #4B4637;
     font-size: 14px;
 }
 .tag .tag-close-icon {
-    color: #0052cc;
-    background: white;
+    color: #ffea00;
+    background: #4B4637;
     border-radius: 50%;
     margin-left: 6px;
     position: relative;
@@ -189,6 +215,19 @@ input[type='radio'] {
     /* height: 14px; */
     /* line-height: 14px; */
 }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #4B4637;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #4B4637;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: #4B4637;
+  }
 
 /* ROTATION
 .albumContent {

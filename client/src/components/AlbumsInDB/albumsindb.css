@@ -1,8 +1,9 @@
 .AlbumsInDB {
     margin: 5px 10px;
-    background-color: white;
+    /* background-color: #B1AB99; */
     border-radius: 5px;
     height: 100vh;
+    background: rgba(177, 171, 153, 0.3);
 }
 
 .dbSectionTitle {
@@ -25,11 +26,11 @@
     border-bottom: 1px solid #c9c9c9;
     padding: 5px;
 }
-
+/*
 .albumsInDB li:nth-child(even) {
     background-color: #eeeeee;
 }
-
+*/
 .albumTitleArtist {
     display: flex;
     justify-content: space-between;
@@ -85,13 +86,13 @@
 }
 
 .trackNameDB {
-    flex: 12;
+    flex: 14;
 }
 
 .trackRatingDB {
-    flex: 3;
+    flex: 4;
 }
 
 .trackTagsDB {
-    flex: 5;
+    flex: 6;
 }
