@@ -3,6 +3,7 @@
     background-size: 200%;
     background-repeat: no-repeat;
     background-position: center top;
+    padding-bottom: 10px;
     /* z-index: 0; */
     /*backdrop-filter: blur(50px);*/
 }
@@ -18,11 +19,12 @@
 }
 
 .AlbumInfo {
+    height: 100vh;
     position: relative;
     z-index: 1;
     display: flex;
     flex-flow: row nowrap;
-    margin: 5px 10px;
+    margin: 5px 10px 0 10px;
     /* background-color: #B1AB99; */
     background: rgba(177, 171, 153, 0.5);
     border-radius: 5px;
@@ -39,7 +41,6 @@
 .rightArrow {
     padding-top: 50vh;
     flex: 1;
-    height: 100vh;
     margin: 10px;
     text-align: right;
     /* border: 1px solid red; */
@@ -54,7 +55,8 @@
 }
 
 .albumCover {
-    max-width: 200px;
+    /* max-width: 200px; */
+    width: 100%;
     margin: 10px auto;
     display: block;
 } 

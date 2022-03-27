@@ -28,8 +28,6 @@ function AlbumInfo(props) {
     const [albumTags, setAlbumTags] = useState([]);
     const [trackTags, setTrackTags] = useState([]);
 
-    const [tagsList, setTagsList] = useState()
-
     const addAlbumTags = event => {
         if (event.key === "Enter" && event.target.value !== "") {
             setAlbumTags([...albumTags, event.target.value]);
@@ -59,10 +57,6 @@ function AlbumInfo(props) {
         console.log(tempAll);
         setTrackTags(tempAll);
     }
-
-    useEffect(()=>{
-        console.log(trackTags);
-    },[trackTags])
 
     useEffect(()=>{
         const fetchUserdb = async () => {
@@ -181,12 +175,6 @@ function AlbumInfo(props) {
                             })}
                             </div>
                         </div>
-                        {/*}
-                        <div className="albumRatingSection albumTagsSection">
-                            <label className="albumRatingLabel">Tags</label>
-                            <input className='albumTags albumRatingInput textInput' placeholder=''></input>
-                        </div>
-                        */}
                         <div className="albumRatingSection albumTags2Section">
                             <label className="albumRatingLabel">Tags</label>
                             <div className="tags-input albumRatingInput">
@@ -255,7 +243,7 @@ function AlbumInfo(props) {
                                                                 }}
                                                             />
                                                             <FaStar className="star" 
-                                                                color={starRatingValue_t <= trackRatings[i] ? '#ffea00' : 'none'}
+                                                                color={starRatingValue_t <= trackRatings[i] ? '#ffea00' : 'black'}
                                                             />
                                                         </label>
                                                     );
