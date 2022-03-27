@@ -1,4 +1,5 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, createElement} from 'react';
+import ReactDOM from 'react-dom';
 import "./albuminfo.css";
 import axios from "axios";
 import {FaStar} from 'react-icons/fa';
@@ -16,7 +17,7 @@ function showMore() {
     }
 }
 
-function AlbumInfo() {
+function AlbumInfo(props) {
     const [userdb, setUserdb] = useState([]);
     const [albumCount, setAlbumCount] = useState(0);
     const [currentAlbum, setCurrentAlbum] = useState(null);
@@ -26,6 +27,8 @@ function AlbumInfo() {
 
     const [albumTags, setAlbumTags] = useState([]);
     const [trackTags, setTrackTags] = useState([]);
+
+    const [tagsList, setTagsList] = useState()
 
     const addAlbumTags = event => {
         if (event.key === "Enter" && event.target.value !== "") {
@@ -42,34 +45,24 @@ function AlbumInfo() {
         if (event.key === "Enter" && event.target.value !== "") {
             let temp = trackTags;
             temp[trackNo].push(event.target.value)
-            console.log("trackTags: ", temp);
+            // console.log("trackTags: ", temp);
             setTrackTags(temp);
             event.target.value = "";
         }
     }
 
     const removeTrackTags = (indexToRemove, trackNo) => {
-        setTrackTags(trackTags[trackNo].filter((_, index) => index !== indexToRemove));
+        console.log("removing: ", trackTags[trackNo][indexToRemove])
+        let temp = trackTags[trackNo].filter((_, index) => index !== indexToRemove);
+        let tempAll = trackTags;
+        tempAll[trackNo] = temp;
+        console.log(tempAll);
+        setTrackTags(tempAll);
     }
 
-    const renderTrackTag = () => {
-        console.log(trackTags[0])
-        console.log(trackTags[0][0])
-        return (
-            <li className="tag">{trackTags[0][0]}</li>
-        )
-    }
-
-    useEffect(() => {
-        console.log(trackTags)
-        if (trackTags[0]) console.log(trackTags[0][0]);
-        if (document.getElementsByClassName("tags")[0]) {
-            document.getElementsByClassName("tags")[0].innerHTML = trackTags[0][0];
-        }
-        else {
-            console.log("no")
-        }
-    }, [trackTags])
+    useEffect(()=>{
+        console.log(trackTags);
+    },[trackTags])
 
     useEffect(()=>{
         const fetchUserdb = async () => {
@@ -94,6 +87,7 @@ function AlbumInfo() {
             // console.log("and now: ", currentAlbum);
             // console.log("just set currentAlbum to ", userdb[albumCount]);
             updateRatings(userdb[albumCount]);
+            props.changeBgImg(userdb[albumCount].img);
         }
         else {
             // console.log("gonna set currAlb to null, ", albumCount )
@@ -159,7 +153,7 @@ function AlbumInfo() {
                 <div className="albumFront">
 
                     <div className="albumInfo">
-                        <img className="albumCover" src={samplePic} onClick={showMore}></img>
+                        <img className="albumCover" src={album ? album.img : samplePic} onClick={showMore}></img>
                         <h1 className="albumTitle">{album ? album.title : "loading album title"}</h1>
                         <h2 className="albumArtist">{album ? album.artistNames[0] : "loading artists"}</h2>
                     </div>
@@ -278,11 +272,8 @@ function AlbumInfo() {
                                             <label className="trackRatingLabel">Tags</label>
                                             <div className="tags-input trackRatingInput">
                                                 <ul className="tags">
-                                                    {/*trackTags[0][0] === "a" ? renderTrackTag() : <li>no</li>*/}
-                                                    {/*
-                                                    <li className="tag">{trackTags ? trackTags[0][0] : "none"}</li>
                                                     {trackTags && trackTags[i].map((trackTag, jindex) => {
-                                                        console.log(i, jindex, trackTag);
+                                                        
                                                         return (
                                                         <li key={jindex} className="tag">
                                                             <span className='tag-title'>{trackTag}</span>
@@ -292,7 +283,7 @@ function AlbumInfo() {
                                                             </span>
                                                         </li>
                                                     )})}
-                                                        */}
+                                                        
                                                 </ul>
                                                 <input
                                                     type="text"

@@ -1,7 +1,8 @@
 .Header {
-    background-color: #B1AB99;
-    opacity: 0.5;
-    color: #4B4637;
+    /* background-color: #B1AB99; */
+    /* opacity: 0.5; */
+    background: rgba(177, 171, 153, 0.5);
+    color: #FFEAA0;
     height: 50px;
     width: 100%;
     display: flex;
@@ -9,6 +10,7 @@
     justify-content: space-between;
     position: sticky;
     top: 0;
+    z-index: 2;
   }
   
   .logo {
@@ -16,6 +18,7 @@
     margin-left: 20px;
     font-weight: bold;
     text-decoration: none;
+    color: #FFEAA0;
   }
   
   .db {
@@ -26,7 +29,7 @@
   }
 
   a:visited {
-    color: #4B4637;
+    color: #FFEAA0;
   }
   
   

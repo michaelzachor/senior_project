@@ -1,5 +1,6 @@
 import React from 'react';
 import "./header.css";
+import {FaUser} from 'react-icons/fa';
 
 
 function Header() { 
@@ -7,7 +8,7 @@ function Header() {
         <header className="Header">
             <div className="headerLeft">
                 <a href="./" className="logo">
-                    Journal
+                    Q
                 </a>
             </div>
             {/* <div className="headerCenter">
@@ -15,7 +16,7 @@ function Header() {
             </div> */}
             <div className="headerRight">
                 <a href="./myMusic" className="db">
-                    My Music
+                    <FaUser />
                 </a>
             </div>
             {/* <div className="navbar">

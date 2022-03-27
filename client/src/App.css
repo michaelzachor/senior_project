@@ -1,9 +1,6 @@
 body {
   /* background-color: #FFEAA0; */
   color: #4B4637;
-
-  background-image: url('./assets/samplePic.jpeg');
-  backdrop-filter: blur(30px);
 }
 
 h1 {
