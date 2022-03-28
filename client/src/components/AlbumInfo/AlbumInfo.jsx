@@ -133,7 +133,7 @@ function AlbumInfo(props) {
 */
 
     const updateAlbum = (updatedData)=> {
-        axios.put("https://seniorproject-michaelzachor.herokuapp.com//albums/" + currentAlbum._id , { 
+        axios.put("https://seniorproject-michaelzachor.herokuapp.com/albums/" + currentAlbum._id , { 
             albumUserData:updatedData[0],
             tracksUserData:updatedData[1]
         });
