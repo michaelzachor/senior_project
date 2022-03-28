@@ -8,7 +8,7 @@ const albumRoute = require("./routes/albums")
 const cors = require("cors");
 
 const app = express();
-const port = process.env.port || 4000;
+const port = process.env.port || "0.0.0.0";
 dotenv.config();
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true}, () => {
     console.log("Connected to MongoDB")
@@ -29,6 +29,10 @@ app.use(cors({
   origin: '*',
   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }))
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('../client/build'))
+}
 
 app.use('/userInfo', userInfoRoute);
 app.use('/auth', authRoute);
