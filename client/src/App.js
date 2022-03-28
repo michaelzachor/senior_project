@@ -12,11 +12,11 @@ function App() {
     // <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Home />}>
+          <Route path="/" exact={true} element={<Home />}>
           </Route>
-          <Route path="/login" element={<Login />}>
+          <Route path="/login" exact={true} element={<Login />}>
           </Route>
-          <Route path="/myMusic" element={<MyMusic />}>
+          <Route path="/myMusic" exact={true} element={<MyMusic />}>
           </Route>
         </Routes>
       </Router>
