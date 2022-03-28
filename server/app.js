@@ -8,8 +8,9 @@ const albumRoute = require("./routes/albums")
 const cors = require("cors");
 
 const app = express();
-const port = process.env.port || "0.0.0.0";
+
 dotenv.config();
+const port = process.env.PORT || "0.0.0.0";
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true}, () => {
     console.log("Connected to MongoDB")
 })
