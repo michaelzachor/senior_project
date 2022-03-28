@@ -60,7 +60,7 @@ function AlbumInfo(props) {
 
     useEffect(()=>{
         const fetchUserdb = async () => {
-            const res = await axios.get("http://localhost:4000/albums/userdb/6220fc41b82cfe6798c7da50") // add userId
+            const res = await axios.get("https://seniorproject-michaelzachor.herokuapp.com/albums/userdb/6220fc41b82cfe6798c7da50") // add userId
             let unMarkedData = [];
             let i = 0;
             while (res.data[i]) {
@@ -133,7 +133,7 @@ function AlbumInfo(props) {
 */
 
     const updateAlbum = (updatedData)=> {
-        axios.put("http://localhost:4000/albums/" + currentAlbum._id , { 
+        axios.put("https://seniorproject-michaelzachor.herokuapp.com//albums/" + currentAlbum._id , { 
             albumUserData:updatedData[0],
             tracksUserData:updatedData[1]
         });

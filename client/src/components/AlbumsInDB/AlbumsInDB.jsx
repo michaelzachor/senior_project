@@ -97,7 +97,7 @@ function AlbumsInDB() {
 
     useEffect(()=>{
         const fetchUserdb = async () => {
-            const res = await axios.get("http://localhost:4000/albums/userdb/6220fc41b82cfe6798c7da50") // add userId
+            const res = await axios.get("https://seniorproject-michaelzachor.herokuapp.com//albums/userdb/6220fc41b82cfe6798c7da50") // add userId
             // console.log("data",res.data)
             let markedData = [];
             let i = 0;
