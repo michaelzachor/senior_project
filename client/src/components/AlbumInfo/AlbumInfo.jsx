@@ -182,7 +182,7 @@ function AlbumInfo(props) {
                                     {albumTags.map((albumTag, index) => {
                                         console.log(albumTags[index])
                                         return (
-                                        <li key={index} className="tag">
+                                        <li key={albumTag} className="tag">
                                             <span className='tag-title'>{albumTag}</span>
                                             <span className='tag-close-icon'
                                                 onClick={() => removeAlbumTags(index)}>
@@ -209,7 +209,7 @@ function AlbumInfo(props) {
                     <div className="albumTracks">
                         <ul className="albumTrackList">
                             {album && album.tracks.map((track, i) => (
-                                <li className="entireTrack" key={i}>
+                                <li className="entireTrack" key={track.title}>
                                     <div className="trackNoNamePlus"> 
                                         <span className="trackNo">{i+1}</span>
                                         <span className="trackName">{track.title}</span>
@@ -263,7 +263,7 @@ function AlbumInfo(props) {
                                                     {trackTags && trackTags[i].map((trackTag, jindex) => {
                                                         
                                                         return (
-                                                        <li key={jindex} className="tag">
+                                                        <li key={trackTag} className="tag">
                                                             <span className='tag-title'>{trackTag}</span>
                                                             <span className='tag-close-icon'
                                                                 onClick={() => removeTrackTags(jindex, i)}>
