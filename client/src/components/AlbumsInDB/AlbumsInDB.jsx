@@ -1,16 +1,19 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import "./albumsindb.css";
 import axios from "axios";
 import Modal from './Modal/Modal'
+import {AuthContext} from '../../context/AuthContext'
 
 function AlbumsInDB() {
     const [userdb, setUserdb] = useState([]);
     const [modalAlbum, setModalAlbum] = useState(null);
     const [wasClicked, setWasClicked] = useState(false);
+    const { user } = useContext(AuthContext);
+
 
     useEffect(()=>{
         const fetchUserdb = async () => {
-            const res = await axios.get("https://seniorproject-michaelzachor.herokuapp.com/albums/userdb/6220fc41b82cfe6798c7da50") // add userId
+            const res = await axios.get(`http://localhost:4000/albums/userdb/${user._id}`) // add userId
             let markedData = [];
             let i = 0;
             while (res.data[i]) {
@@ -21,6 +24,7 @@ function AlbumsInDB() {
         }
         fetchUserdb();
     }, [])
+    
 
     useEffect(()=>{
         console.log("c: ", wasClicked);

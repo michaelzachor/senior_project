@@ -1,9 +1,11 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import "./albuminfo.css";
 import axios from "axios";
 import {FaStar} from 'react-icons/fa';
 import samplePic from "../../assets/samplePic.jpeg";
 import {FaCaretRight, FaCaretLeft} from 'react-icons/fa';
+import {AuthContext} from '../../context/AuthContext'
+
 function showMore() {
     let albumRating = document.getElementsByClassName("albumRating")[0];
     let albumTracks = document.getElementsByClassName("albumTracks")[0];
@@ -20,7 +22,8 @@ function AlbumInfo(props) {
     const [userdb, setUserdb] = useState([]);
     const [albumCount, setAlbumCount] = useState(0);
     const [currentAlbum, setCurrentAlbum] = useState(null);
-    const [user, setUser] = useState({})
+    // const [user, setUser] = useState({})
+    const { user } = useContext(AuthContext);
 
     const [albumRating, setAlbumRating] = useState(null);
     const [trackRatings, setTrackRatings] = useState([]);
@@ -58,24 +61,24 @@ function AlbumInfo(props) {
         setTrackTags(tempAll);
     }
 
-    useEffect(()=>{
-        const fetchUser = async () => {
-            const res = await axios.get(`https://seniorproject-michaelzachor.herokuapp.com/albums/userdb/`) // add userId
-            let unMarkedData = [];
-            let i = 0;
-            while (res.data[i]) {
-                if (!res.data[i].marked) unMarkedData.push(res.data[i]);
-                i++;
-            }
-            setUserdb(unMarkedData);
-            // console.log("just set userdb to ", unMarkedData)
-        }
-        fetchUser();
-    }, [])
+    // useEffect(()=>{
+    //     const fetchUser = async () => {
+    //         const res = await axios.get(`http://localhost:4000/albums/userdb/${user._id}`) // add userId
+    //         let unMarkedData = [];
+    //         let i = 0;
+    //         while (res.data[i]) {
+    //             if (!res.data[i].marked) unMarkedData.push(res.data[i]);
+    //             i++;
+    //         }
+    //         setUserdb(unMarkedData);
+    //         // console.log("just set userdb to ", unMarkedData)
+    //     }
+    //     fetchUser();
+    // }, [])
 
     useEffect(()=>{
         const fetchUserdb = async () => {
-            const res = await axios.get("https://seniorproject-michaelzachor.herokuapp.com/albums/userdb/6220fc41b82cfe6798c7da50") // add userId
+            const res = await axios.get(`http://localhost:4000/albums/userdb/${user._id}`) // add userId
             let unMarkedData = [];
             let i = 0;
             while (res.data[i]) {

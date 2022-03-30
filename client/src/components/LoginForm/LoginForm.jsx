@@ -8,6 +8,8 @@ function LoginForm() {
     const email = useRef();
     const password = useRef();
     const {user, isFetching, error, dispatch} = useContext(AuthContext);
+
+    
     const handleClick = (e) => {
         e.preventDefault();
         loginCall({email:email.current.value,password:password.current.value}, dispatch)
