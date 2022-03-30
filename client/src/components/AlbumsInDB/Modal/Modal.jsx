@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import "..//albumsindb.css";
 import {FaStar} from 'react-icons/fa';
 
@@ -19,7 +19,7 @@ function Modal(props) {
                     }}>&times;</span>
                     <div className="modal-content">
                         <div className="dbAlbumInfo">
-                            <img className="albumCoverModal" src={album && album.img}></img>
+                            <img className="albumCoverModal" alt="album cover" src={album && album.img}></img>
                             <h1 className="albumTitleModal">{album && album.title}</h1>
                             <h2 className="albumArtistModal">{album && album.artistNames[0]}</h2>
                         </div>

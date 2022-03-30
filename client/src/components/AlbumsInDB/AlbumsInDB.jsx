@@ -37,7 +37,7 @@ function AlbumsInDB() {
         <div className="dbAlbums">
             {userdb && userdb.map((album, i) => (
                 <div key={album.spotifyId} className="dbAlbum">
-                    <img className="dbAlbumCover" src={album.img} onClick={() => {
+                    <img className="dbAlbumCover" alt="album cover" src={album.img} onClick={() => {
                         setWasClicked(true)
                         setModalAlbum(album);
                     }}>

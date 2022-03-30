@@ -8,7 +8,7 @@ function Header() {
         <header className="Header">
             <div className="headerLeft">
                 <a href="./" className="logo">
-                    Q
+                    Qt
                 </a>
             </div>
             {/* <div className="headerCenter">

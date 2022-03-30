@@ -2,13 +2,13 @@
 // import axios from 'axios';
 import Header from "../components/Header/Header"
 import LoginForm from "../components/LoginForm/LoginForm"
+import "../components/LoginForm/loginform.css"
 
 function Login() {
     return (
         <div className='Login'>
             <Header />
             <LoginForm />
-            <h1>Check</h1>
         </div>
     )
 }

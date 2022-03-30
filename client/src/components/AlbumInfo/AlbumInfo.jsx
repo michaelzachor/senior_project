@@ -1,5 +1,4 @@
-import React, { useState, useEffect, createElement} from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState, useEffect} from 'react';
 import "./albuminfo.css";
 import axios from "axios";
 import {FaStar} from 'react-icons/fa';
@@ -21,6 +20,7 @@ function AlbumInfo(props) {
     const [userdb, setUserdb] = useState([]);
     const [albumCount, setAlbumCount] = useState(0);
     const [currentAlbum, setCurrentAlbum] = useState(null);
+    const [user, setUser] = useState({})
 
     const [albumRating, setAlbumRating] = useState(null);
     const [trackRatings, setTrackRatings] = useState([]);
@@ -57,6 +57,21 @@ function AlbumInfo(props) {
         console.log(tempAll);
         setTrackTags(tempAll);
     }
+
+    useEffect(()=>{
+        const fetchUser = async () => {
+            const res = await axios.get(`https://seniorproject-michaelzachor.herokuapp.com/albums/userdb/`) // add userId
+            let unMarkedData = [];
+            let i = 0;
+            while (res.data[i]) {
+                if (!res.data[i].marked) unMarkedData.push(res.data[i]);
+                i++;
+            }
+            setUserdb(unMarkedData);
+            // console.log("just set userdb to ", unMarkedData)
+        }
+        fetchUser();
+    }, [])
 
     useEffect(()=>{
         const fetchUserdb = async () => {
@@ -147,7 +162,7 @@ function AlbumInfo(props) {
                 <div className="albumFront">
 
                     <div className="albumInfo">
-                        <img className="albumCover" src={album ? album.img : samplePic} onClick={showMore}></img>
+                        <img className="albumCover" alt="album cover" src={album ? album.img : samplePic} onClick={showMore}></img>
                         <h1 className="albumTitle">{album ? album.title : "loading album title"}</h1>
                         <h2 className="albumArtist">{album ? album.artistNames[0] : "loading artists"}</h2>
                     </div>
@@ -308,7 +323,7 @@ function AlbumInfo(props) {
                     let jStars = trackRatings[j];
                     let jTags = trackTags[j];
                     // let jTags = allTracks[j].getElementsByClassName('trackTags')[0].value;
-                    if ((jStars) || (jTags != []) ) {
+                    if ((jStars) || (jTags !== []) ) {
                         taggedTracks[j] = {rating:jStars, tags:jTags}
                     }
                     j++;

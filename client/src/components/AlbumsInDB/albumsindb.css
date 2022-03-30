@@ -2,6 +2,14 @@
     background-color: black;
 }
 
+.AlbumsInDB {
+    margin: 5px 10px;
+    /* background-color: #B1AB99; */
+    /* border-radius: 5px; */
+    height: 100vh;
+    /* background: rgba(177, 171, 153, 0.3); */
+}
+
 .dbAlbums {
     display: flex;
     flex-wrap: wrap;
@@ -172,13 +180,7 @@
     cursor: pointer;
   }
 
-.AlbumsInDB {
-    margin: 5px 10px;
-    /* background-color: #B1AB99; */
-    /* border-radius: 5px; */
-    height: 100vh;
-    /* background: rgba(177, 171, 153, 0.3); */
-}
+
 
 .dbSectionTitle {
     padding: 10px;
