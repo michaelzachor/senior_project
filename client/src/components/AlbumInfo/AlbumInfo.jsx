@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext} from 'react';
-import "./albuminfo.css";
 import axios from "axios";
-import {FaStar} from 'react-icons/fa';
+import {FaStar, FaCaretRight, FaCaretLeft} from 'react-icons/fa';
+import {AuthContext} from '../../context/AuthContext';
+import { onPageLoad } from '../../spotifyApiCalls';
 import samplePic from "../../assets/samplePic.jpeg";
-import {FaCaretRight, FaCaretLeft} from 'react-icons/fa';
-import {AuthContext} from '../../context/AuthContext'
+import "./albuminfo.css";
 
-function showMore() {
+// SHOW ALBUM TRACKS
+function showMore() { 
     let albumRating = document.getElementsByClassName("albumRating")[0];
     let albumTracks = document.getElementsByClassName("albumTracks")[0];
     if (albumRating.style.display === "block") {
@@ -19,11 +20,11 @@ function showMore() {
 }
 
 function AlbumInfo(props) {
+    const { user } = useContext(AuthContext);
+
     const [userdb, setUserdb] = useState([]);
     const [albumCount, setAlbumCount] = useState(0);
     const [currentAlbum, setCurrentAlbum] = useState(null);
-    // const [user, setUser] = useState({})
-    const { user } = useContext(AuthContext);
 
     const [albumRating, setAlbumRating] = useState(null);
     const [trackRatings, setTrackRatings] = useState([]);
@@ -31,27 +32,24 @@ function AlbumInfo(props) {
     const [albumTags, setAlbumTags] = useState([]);
     const [trackTags, setTrackTags] = useState([]);
 
+    // HANDLE TAGS
     const addAlbumTags = event => {
         if (event.key === "Enter" && event.target.value !== "") {
             setAlbumTags([...albumTags, event.target.value]);
             event.target.value = "";
         }
     }
-
     const removeAlbumTags = indexToRemove => {
         setAlbumTags(albumTags.filter((_, index) => index !== indexToRemove));
     }
-
     const addTrackTags = (event, trackNo) => {
         if (event.key === "Enter" && event.target.value !== "") {
             let temp = trackTags;
             temp[trackNo].push(event.target.value)
-            // console.log("trackTags: ", temp);
             setTrackTags(temp);
             event.target.value = "";
         }
     }
-
     const removeTrackTags = (indexToRemove, trackNo) => {
         console.log("removing: ", trackTags[trackNo][indexToRemove])
         let temp = trackTags[trackNo].filter((_, index) => index !== indexToRemove);
@@ -61,24 +59,25 @@ function AlbumInfo(props) {
         setTrackTags(tempAll);
     }
 
-    // useEffect(()=>{
-    //     const fetchUser = async () => {
-    //         const res = await axios.get(`http://localhost:4000/albums/userdb/${user._id}`) // add userId
-    //         let unMarkedData = [];
-    //         let i = 0;
-    //         while (res.data[i]) {
-    //             if (!res.data[i].marked) unMarkedData.push(res.data[i]);
-    //             i++;
-    //         }
-    //         setUserdb(unMarkedData);
-    //         // console.log("just set userdb to ", unMarkedData)
-    //     }
-    //     fetchUser();
-    // }, [])
 
     useEffect(()=>{
-        const fetchUserdb = async () => {
-            const res = await axios.get(`http://localhost:4000/albums/userdb/${user._id}`) // add userId
+        console.log("onpageload")
+        console.log("user._id: ",user._id)
+        onPageLoad();
+        //onPageLoad(user._id)
+    }, [])
+
+    // onPageLoad can have parameter user._id
+    // in onPageLoad, if it's the first time, ignore the param
+    //      if it's the second time, set userId = param
+    //      if param is null, do nothing (this takes care of calling onPageLoad within sAC.js)
+    // and now we can add albums with userId=userId if they're not already in there. 
+
+
+    // SET USER DB (this is not gonna run until the entire userdb is updated with new stuff from spotify)
+    useEffect(()=>{
+        const fetchUserUnmarkedDB = async () => {
+            const res = await axios.get(`http://localhost:4000/albums/userdb/${user._id}`);
             let unMarkedData = [];
             let i = 0;
             while (res.data[i]) {
@@ -86,33 +85,23 @@ function AlbumInfo(props) {
                 i++;
             }
             setUserdb(unMarkedData);
-            // console.log("just set userdb to ", unMarkedData)
         }
-        fetchUserdb();
+        fetchUserUnmarkedDB();
     }, [])
 
+    // SET CURRENT ALBUM
     useEffect(()=>{ 
         if (userdb[albumCount]) {
-            // console.log("gonna set currAlbum, ", albumCount)
-            // console.log("currently: ", currentAlbum)
             setCurrentAlbum(userdb[albumCount]);
-            // console.log("and now: ", currentAlbum);
-            // console.log("just set currentAlbum to ", userdb[albumCount]);
             updateRatings(userdb[albumCount]);
             props.changeBgImg(userdb[albumCount].img);
         }
-        else {
-            // console.log("gonna set currAlb to null, ", albumCount )
-            setCurrentAlbum(null);
-            // console.log("just set currentAlbum to null")
-        }
+        else setCurrentAlbum(null);
     }, [userdb, albumCount])
 
+    // RESET RATINGS ON NEW ALBUM
     function updateRatings(album) {
-        // console.log("check1")
-        // console.log("in here ", album)
         if (album) {
-            // console.log("check2")
             let tempRatings = []
             let tempTags = []
             for (let i = 0; i < album.tracks.length; i++) {
@@ -121,35 +110,12 @@ function AlbumInfo(props) {
             }
             setTrackRatings(tempRatings);
             setAlbumRating(null);
-
-            // console.log("temp: ", tempTags)
             setTrackTags(tempTags);
             setAlbumTags([]);
         }
     }
-/* NEVER FIRES
-    useEffect(() => {
-        console.log("check1")
-        console.log("in here ", currentAlbum)
-        if (currentAlbum) {
-            console.log("check2")
-            let tempRatings = []
-            let tempTags = []
-            for (let i = 0; i < currentAlbum.tracks.length; i++) {
-                tempRatings.push(null);
-                tempTags.push([])
-            }
-            setTrackRatings(tempRatings);
-            setAlbumRating(null);
 
-            console.log("temp: ", tempTags)
-            setTrackTags(tempTags);
-            setAlbumTags([]);
-        }
-        
-    }, [currentAlbum])
-*/
-
+    // PUSH NEW USER DATA TO ALBUM
     const updateAlbum = (updatedData)=> {
         axios.put("https://seniorproject-michaelzachor.herokuapp.com/albums/" + currentAlbum._id , { 
             albumUserData:updatedData[0],
@@ -157,8 +123,7 @@ function AlbumInfo(props) {
         });
     }
 
-    //console.log("tT: ", trackTags)
-
+    // SHOW AN ALBUM
     function renderEachAlbum(album) {
         return (
             <div className="albumContent">
@@ -216,8 +181,6 @@ function AlbumInfo(props) {
                                 />
                             </div>
                         </div>
-
-                        
                         <div className="albumRatingSection albumJournalSection">
                             <label className="albumRatingLabel journalLabel">Journal</label>
                             <textarea className='albumJournal albumRatingInput textInput' placeholder=''></textarea>
@@ -268,18 +231,11 @@ function AlbumInfo(props) {
                                                 })}
                                             </div>
                                         </div>
-                                        {/*}
-                                        <div className="trackRatingSection trackTagsSection">
-                                            <label>Tags</label>
-                                            <input className='tags' placeholder=''></input>
-                                        </div>
-                                        */}
                                         <div className="trackRatingSection trackTags2Section">
                                             <label className="trackRatingLabel">Tags</label>
                                             <div className="tags-input trackRatingInput">
                                                 <ul className="tags">
                                                     {trackTags && trackTags[i].map((trackTag, jindex) => {
-                                                        
                                                         return (
                                                         <li key={trackTag} className="tag">
                                                             <span className='tag-title'>{trackTag}</span>
@@ -289,7 +245,6 @@ function AlbumInfo(props) {
                                                             </span>
                                                         </li>
                                                     )})}
-                                                        
                                                 </ul>
                                                 <input
                                                     type="text"
@@ -318,6 +273,7 @@ function AlbumInfo(props) {
             <div className="middleSection">
                 {renderEachAlbum(currentAlbum)}
             </div>
+
             <div className="rightArrow" onClick={() => {
                 let taggedTracks = {};
                 let allTracks = document.getElementsByClassName('trackRating');
@@ -325,7 +281,6 @@ function AlbumInfo(props) {
                 while (allTracks[j]) {
                     let jStars = trackRatings[j];
                     let jTags = trackTags[j];
-                    // let jTags = allTracks[j].getElementsByClassName('trackTags')[0].value;
                     if ((jStars) || (jTags !== []) ) {
                         taggedTracks[j] = {rating:jStars, tags:jTags}
                     }
@@ -335,13 +290,6 @@ function AlbumInfo(props) {
                     {rating:albumRating, tags:albumTags},
                     taggedTracks
                 ]);
-                // reset values before incrementing album
-                /*
-                let k = 0;
-                let trackTags = document.getElementsByClassName('trackTags');
-                while (trackTags[k]) trackTags.value = "";
-                document.getElementsByClassName('albumTags')[0].value = "";
-                */
                 document.getElementsByClassName('albumJournal')[0].value="";
                 setAlbumCount(albumCount+1);
                 }}>

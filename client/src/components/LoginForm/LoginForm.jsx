@@ -9,12 +9,12 @@ function LoginForm() {
     const password = useRef();
     const {user, isFetching, error, dispatch} = useContext(AuthContext);
 
-    
     const handleClick = (e) => {
         e.preventDefault();
         loginCall({email:email.current.value,password:password.current.value}, dispatch)
+
     }
-    console.log(user);
+
     return (
     <div className="LoginForm">
         <div className="loginLogo">

@@ -1,0 +1,74 @@
+.Signup {
+    background: black;
+}
+
+.SignupForm {
+    height: 100vh;
+    margin: 5px 10px 0 10px;
+    background: rgba(177, 171, 153, 0.5);
+    border-radius: 5px;
+}
+
+.signupLogo {
+    color: #FFEAA0;
+    font-size: 56px;
+    font-weight: bold;
+    padding-top: 30%; 
+    padding-bottom: 15%;
+    text-align: center;
+    text-decoration: none;
+}
+
+.signupForm {
+    width: 70%;
+    margin: auto;
+}
+
+.signupSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.signupSection label {
+    flex: 1;
+    text-align: center;
+    margin: 5px;
+}
+
+.signupSection input {
+    flex: 8;
+    border-radius: 5px;
+    border: 1px solid rgb(214, 216, 218);
+    padding: 5px;
+    margin: 5px;
+    background: rgba(177, 171, 153, 0.5);
+    font-family: "Lato", "Helvetica Neue", sans-serif;
+    color: black;
+}
+
+.signupSection input:focus-within {
+    outline: 1px solid #ffeaa0;
+    border: none;
+}
+
+.signupSection input::placeholder {
+    color: #ffeaa0;
+}
+
+button {
+    background-color: #ffeaa0;
+    border: none;
+    border-radius: 5px;
+    color: #4B4637;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    display: block;
+    margin: 10px auto;
+    cursor: pointer;
+}

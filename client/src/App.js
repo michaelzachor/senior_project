@@ -6,12 +6,10 @@ import Login from './containers/Login';
 import MyMusic from './containers/MyMusic';
 import Signup from './containers/Signup';
 import { AuthContext } from './context/AuthContext';
-//Style
 import './App.css';
 
 function App() {
   const {user} = useContext(AuthContext)
-  const [loggedIn, setLoggedIn] = useState(false);
   return (
     // <div className="App">
       <Router>
