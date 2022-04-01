@@ -11,13 +11,17 @@ router.get('/', (req, res) => {
 // add album to overall user db
 router.post('/', async (req, res) => {
     console.log("trying");
-    const newAlbum = new Album(req.body)
-    try{
-        const savedAlbum = await newAlbum.save();
-        res.status(200).json(savedAlbum)
-    } catch(err) {
-        res.status(500).json(err);
-    }
+    let alreadyExists = await Album.exists({spotifyId:req.body.spotifyId}); 
+    if (!alreadyExists) {
+        const newAlbum = new Album(req.body)
+        try{
+            console.log("trying2")
+            const savedAlbum = await newAlbum.save();
+            res.status(200).json(savedAlbum)
+        } catch(err) {
+            res.status(500).json(err);
+        }
+    } 
 })
 
 //update album (fix)

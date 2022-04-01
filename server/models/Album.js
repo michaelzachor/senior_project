@@ -24,21 +24,10 @@ const AlbumSchema = new mongoose.Schema(
             type:String,
             required:true
         },
-        
         tracks: {
             type:[Track],
             required:true
         },
-        /*
-        trackNames: {
-            type:[String],
-            required:true
-        },
-        trackSpotifyIds: {
-            type:[String],
-            required:true
-        },
-        */
         img:{
             type:String
         },

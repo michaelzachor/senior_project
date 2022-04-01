@@ -63,8 +63,8 @@ function AlbumInfo(props) {
     useEffect(()=>{
         console.log("onpageload")
         console.log("user._id: ",user._id)
-        onPageLoad();
-        //onPageLoad(user._id)
+        // onPageLoad();
+        onPageLoad(user._id)
     }, [])
 
     // onPageLoad can have parameter user._id
