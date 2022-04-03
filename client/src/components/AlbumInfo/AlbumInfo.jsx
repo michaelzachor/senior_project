@@ -77,7 +77,7 @@ function AlbumInfo(props) {
     // SET USER DB (this is not gonna run until the entire userdb is updated with new stuff from spotify)
     useEffect(()=>{
         const fetchUserUnmarkedDB = async () => {
-            const res = await axios.get(`http://localhost:4000/albums/userdb/${user._id}`);
+            const res = await axios.get(process.env.REACT_APP_SERVER_URL+user._id);
             let unMarkedData = [];
             let i = 0;
             while (res.data[i]) {
@@ -99,6 +99,8 @@ function AlbumInfo(props) {
         else setCurrentAlbum(null);
     }, [userdb, albumCount])
 
+    // console.log(userdb);
+
     // RESET RATINGS ON NEW ALBUM
     function updateRatings(album) {
         if (album) {
@@ -115,12 +117,23 @@ function AlbumInfo(props) {
         }
     }
 
+    if (currentAlbum) console.log("cAId: ",currentAlbum._id);
+
     // PUSH NEW USER DATA TO ALBUM
     const updateAlbum = (updatedData)=> {
-        axios.put("https://seniorproject-michaelzachor.herokuapp.com/albums/" + currentAlbum._id , { 
-            albumUserData:updatedData[0],
-            tracksUserData:updatedData[1]
-        });
+        console.log("in update album: ", currentAlbum._id)
+        try {
+            axios.put(process.env.REACT_APP_SERVER_URL+currentAlbum._id, { 
+                albumUserData:updatedData[0],
+                tracksUserData:updatedData[1]
+            });
+        } catch(err) {
+            console.log("in catch")
+            console.log(err);
+        }
+        console.log("still in update album")
+        // console.log("userDataAlbum: ", updatedData[0]);
+        // console.log("tried axios put 62465478ee07f5e0649204b5: ",updatedData[1])
     }
 
     // SHOW AN ALBUM
@@ -278,18 +291,29 @@ function AlbumInfo(props) {
                 let taggedTracks = {};
                 let allTracks = document.getElementsByClassName('trackRating');
                 let j = 0;
+                let anyTracksMarked = false;
                 while (allTracks[j]) {
                     let jStars = trackRatings[j];
                     let jTags = trackTags[j];
-                    if ((jStars) || (jTags !== []) ) {
+                    console.log("jS: ",jStars);
+                    console.log("jT: ",jTags);
+                    if ((jStars) || (jTags.length > 0) ) {
+                        console.log("jStars or jTags")
+                        anyTracksMarked = true;
                         taggedTracks[j] = {rating:jStars, tags:jTags}
-                    }
+                    } 
                     j++;
                 }
-                updateAlbum([
-                    {rating:albumRating, tags:albumTags},
-                    taggedTracks
-                ]);
+                console.log("tT: ", taggedTracks);
+                console.log("aR: ", albumRating);
+                console.log("aT: ", albumTags);
+                if (albumRating || albumTags.length > 0 || anyTracksMarked) {
+                    console.log("updating album")
+                    updateAlbum([
+                        {rating:albumRating, tags:albumTags},
+                        taggedTracks
+                    ]);
+                }
                 document.getElementsByClassName('albumJournal')[0].value="";
                 setAlbumCount(albumCount+1);
                 }}>

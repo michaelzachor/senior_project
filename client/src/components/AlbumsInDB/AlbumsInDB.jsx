@@ -13,7 +13,7 @@ function AlbumsInDB() {
 
     useEffect(()=>{
         const fetchUserdb = async () => {
-            const res = await axios.get(`http://localhost:4000/albums/userdb/${user._id}`) // add userId
+            const res = await axios.get(process.env.REACT_APP_SERVER_URL+`albums/userdb/${user._id}`) // add userId
             let markedData = [];
             let i = 0;
             while (res.data[i]) {
@@ -25,7 +25,7 @@ function AlbumsInDB() {
         fetchUserdb();
     }, [])
     
-
+    console.log(userdb)
     useEffect(()=>{
         console.log("c: ", wasClicked);
         if (wasClicked) {

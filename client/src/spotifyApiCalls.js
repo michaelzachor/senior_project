@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let redirect_uri = "http://localhost:3000/";
+let redirect_uri = "process.env.REACT_APP_CLIENT_URL";
 
 let client_id = ""; 
 let client_secret = "";
@@ -197,7 +197,7 @@ async function handleAlbumsResponse() {
                 })
             });
             try {
-                await axios.post(`http://localhost:4000/albums/`, {
+                await axios.post(process.env.REACT_APP_SERVER_URL, {
                     userId:userId,
                     spotifyId:item.album.id,
                     artistNames:artistNames,
@@ -216,13 +216,21 @@ async function handleAlbumsResponse() {
         // createNewAlbums();
     }
     else if ( this.status == 401 ){
-        console.log("should refresh token")
-        // refreshAccessToken();
+        // console.log("should refresh token")
+        refreshAccessToken();
     }
     else {
         console.log(this.responseText);
         alert(this.responseText);
     }
+}
+
+function refreshAccessToken(){
+    refresh_token = localStorage.getItem("refresh_token");
+    let body = "grant_type=refresh_token";
+    body += "&refresh_token=" + refresh_token;
+    body += "&client_id=" + client_id;
+    callAuthorizationApi(body);
 }
 
 // function handleAlbumsResponse(){
