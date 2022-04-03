@@ -200,7 +200,7 @@ async function handleAlbumsResponse() {
                 })
             });
             try {
-                await axios.post(SERVER_URL, {
+                await axios.post(SERVER_URL+`/albums/`, {
                     userId:userId,
                     spotifyId:item.album.id,
                     artistNames:artistNames,
