@@ -100,7 +100,7 @@ function AlbumInfo(props) {
         else setCurrentAlbum(null);
     }, [userdb, albumCount])
 
-    // console.log(userdb);
+    console.log('USERDB: ', userdb);
 
     // RESET RATINGS ON NEW ALBUM
     function updateRatings(album) {
