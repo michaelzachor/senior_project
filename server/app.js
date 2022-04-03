@@ -46,4 +46,4 @@ app.use('/auth', authRoute);
 app.use('/posts', postRoute);
 app.use('/albums', albumRoute);
 
-app.listen(port, () => console.log("Server is running.")); //runs automatically
+app.listen(port, () => console.log("Server is running on port ", port)); //runs automatically
