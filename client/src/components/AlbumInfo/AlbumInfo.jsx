@@ -20,6 +20,7 @@ function showMore() {
 }
 
 function AlbumInfo(props) {
+    const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
     const { user } = useContext(AuthContext);
 
     const [userdb, setUserdb] = useState([]);
@@ -77,7 +78,7 @@ function AlbumInfo(props) {
     // SET USER DB (this is not gonna run until the entire userdb is updated with new stuff from spotify)
     useEffect(()=>{
         const fetchUserUnmarkedDB = async () => {
-            const res = await axios.get(process.env.REACT_APP_SERVER_URL+user._id);
+            const res = await axios.get(SERVER_URL+user._id);
             let unMarkedData = [];
             let i = 0;
             while (res.data[i]) {
@@ -123,7 +124,7 @@ function AlbumInfo(props) {
     const updateAlbum = (updatedData)=> {
         console.log("in update album: ", currentAlbum._id)
         try {
-            axios.put(process.env.REACT_APP_SERVER_URL+currentAlbum._id, { 
+            axios.put(SERVER_URL+currentAlbum._id, { 
                 albumUserData:updatedData[0],
                 tracksUserData:updatedData[1]
             });

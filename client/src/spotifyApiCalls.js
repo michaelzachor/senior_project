@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-let redirect_uri = "process.env.REACT_APP_CLIENT_URL";
+const CLIENT_URL = `https://warm-jelly-6d1ccf.netlify.app/`
+const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+
+let redirect_uri = CLIENT_URL;
 
 let client_id = ""; 
 let client_secret = "";
@@ -197,7 +200,7 @@ async function handleAlbumsResponse() {
                 })
             });
             try {
-                await axios.post(process.env.REACT_APP_SERVER_URL, {
+                await axios.post(SERVER_URL, {
                     userId:userId,
                     spotifyId:item.album.id,
                     artistNames:artistNames,

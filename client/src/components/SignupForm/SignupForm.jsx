@@ -5,6 +5,7 @@ import {FaAt, FaLock} from 'react-icons/fa';
 import "./signupform.css"
 
 function SignupForm() {
+    const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
     const email = useRef();
     const password = useRef();
     const passwordAgain = useRef();
@@ -25,7 +26,7 @@ function SignupForm() {
                 password: password.current.value
             }
             try {
-                await axios.post(process.env.REACT_APP_SERVER_URL+`auth/register`, user)
+                await axios.post(SERVER_URL+`auth/register`, user)
                 navigate('/login')
             } catch(err) {
                 console.log(err);

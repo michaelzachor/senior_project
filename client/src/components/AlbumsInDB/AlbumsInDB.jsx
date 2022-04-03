@@ -5,6 +5,7 @@ import Modal from './Modal/Modal'
 import {AuthContext} from '../../context/AuthContext'
 
 function AlbumsInDB() {
+    const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
     const [userdb, setUserdb] = useState([]);
     const [modalAlbum, setModalAlbum] = useState(null);
     const [wasClicked, setWasClicked] = useState(false);
@@ -13,7 +14,7 @@ function AlbumsInDB() {
 
     useEffect(()=>{
         const fetchUserdb = async () => {
-            const res = await axios.get(process.env.REACT_APP_SERVER_URL+`albums/userdb/${user._id}`) // add userId
+            const res = await axios.get(SERVER_URL+`albums/userdb/${user._id}`) // add userId
             let markedData = [];
             let i = 0;
             while (res.data[i]) {
