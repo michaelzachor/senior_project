@@ -92,6 +92,7 @@ function AlbumInfo(props) {
 
     // SET CURRENT ALBUM
     useEffect(()=>{ 
+        console.log("userdb has changed to: ", userdb)
         if (userdb[albumCount]) {
             setCurrentAlbum(userdb[albumCount]);
             updateRatings(userdb[albumCount]);
