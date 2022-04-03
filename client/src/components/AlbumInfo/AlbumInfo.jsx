@@ -78,6 +78,7 @@ function AlbumInfo(props) {
     // SET USER DB (this is not gonna run until the entire userdb is updated with new stuff from spotify)
     useEffect(()=>{
         const fetchUserUnmarkedDB = async () => {
+            console.log("fetching at: ", SERVER_URL+`albums/${user._id}`);
             const res = await axios.get(SERVER_URL+`albums/${user._id}`);
             let unMarkedData = [];
             let i = 0;
