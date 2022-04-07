@@ -20,7 +20,8 @@ function showMore() {
 }
 
 function AlbumInfo(props) {
-    const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+    // const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+    const SERVER_URL = `http://localhost:4000/`
     const { user } = useContext(AuthContext);
 
     const [userdb, setUserdb] = useState([]);
@@ -61,12 +62,12 @@ function AlbumInfo(props) {
     }
 
 
-    useEffect(()=>{
-        console.log("onpageload")
-        console.log("user._id: ",user._id)
-        // onPageLoad();
-        onPageLoad(user._id)
-    }, [])
+    // useEffect(()=>{
+    //     console.log("onpageload")
+    //     console.log("user._id: ",user._id)
+    //     // onPageLoad();
+    //     onPageLoad(user._id)
+    // }, [])
 
     // onPageLoad can have parameter user._id
     // in onPageLoad, if it's the first time, ignore the param
@@ -93,7 +94,7 @@ function AlbumInfo(props) {
 
     // SET CURRENT ALBUM
     useEffect(()=>{ 
-        console.log("userdb has changed to: ", userdb)
+        // console.log("userdb has changed to: ", userdb)
         if (userdb[albumCount]) {
             setCurrentAlbum(userdb[albumCount]);
             updateRatings(userdb[albumCount]);
@@ -102,7 +103,7 @@ function AlbumInfo(props) {
         else setCurrentAlbum(null);
     }, [userdb, albumCount])
 
-    console.log('USERDB: ', userdb);
+    // console.log('USERDB: ', userdb);
 
     // RESET RATINGS ON NEW ALBUM
     function updateRatings(album) {
@@ -120,16 +121,18 @@ function AlbumInfo(props) {
         }
     }
 
-    if (currentAlbum) console.log("cAId: ",currentAlbum._id);
+    // if (currentAlbum) console.log("cAId: ",currentAlbum._id);
 
     // PUSH NEW USER DATA TO ALBUM
-    const updateAlbum = (updatedData)=> {
+    const updateAlbum = async (updatedData)=> {
         console.log("in update album: ", currentAlbum._id)
         try {
-            axios.put(SERVER_URL+`albums/${currentAlbum._id}`, { 
-                albumUserData:updatedData[0],
-                tracksUserData:updatedData[1]
+            console.log(SERVER_URL+`albums/${currentAlbum._id}`)
+            await axios.put(SERVER_URL+`albums/${currentAlbum._id}`, { 
+                albumUserData: updatedData[0],
+                tracksUserData: updatedData[1]
             });
+            console.log(SERVER_URL+`albums/${currentAlbum._id}`)
         } catch(err) {
             console.log("in catch")
             console.log(err);

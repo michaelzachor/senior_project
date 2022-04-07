@@ -1,18 +1,29 @@
-import React, {useRef, useContext} from 'react';
+import React, {useRef, useContext, useEffect, useState} from 'react';
 import {FaAt, FaLock} from 'react-icons/fa';
 import {loginCall} from "../../apiCalls"
 import { AuthContext } from '../../context/AuthContext';
 import "./loginform.css"
+import {useNavigate} from 'react-router-dom'
+
 
 function LoginForm() {
     const email = useRef();
     const password = useRef();
     const {user, isFetching, error, dispatch} = useContext(AuthContext);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (loggedIn) {
+            console.log(user);
+            navigate('/loading')
+        }
+    },[loggedIn])
 
     const handleClick = (e) => {
         e.preventDefault();
-        loginCall({email:email.current.value,password:password.current.value}, dispatch)
-
+        loginCall({email:email.current.value,password:password.current.value}, dispatch).then(
+            setLoggedIn(true));
     }
 
     return (

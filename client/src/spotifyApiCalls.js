@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const CLIENT_URL = `https://warm-jelly-6d1ccf.netlify.app/`
-const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+// const CLIENT_URL = `https://warm-jelly-6d1ccf.netlify.app/`
+// const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+const CLIENT_URL = `http://localhost:3000/`
+const SERVER_URL = `http://localhost:4000/`
 
 let redirect_uri = CLIENT_URL;
 
@@ -52,6 +54,8 @@ export function onPageLoad(paramId) {
         access_token = localStorage.getItem("access_token");
         console.log("getting albums: ", access_token);
         getAlbums(access_token);
+        console.log("getting playlist albums")
+        // getPlaylists(access_token);
     }
 }
 
@@ -131,95 +135,107 @@ function getAlbums(accessToken) {
     callApi( "GET", ALBUMS, null, handleAlbumsResponse, accessToken );
 }
 
+function getPlaylists(accessToken) {
+    callApi( "GET", PLAYLISTS, null, handlePlaylistsResponse, accessToken );
+}
+
+function getPlaylistTracks(accessToken, playlistID) {
+    let url = TRACKS.replace("{{PlaylistId}}", playlistID);
+    callApi( "GET", url, null, handlePlaylistTracksResponse, accessToken );
+}
+
 async function handleAlbumsResponse() {
+    console.log("albums status: ", this.status);
     if ( this.status == 200 ){
-        // const createNewAlbums = () => {
-            let data = JSON.parse(this.responseText);
-            console.log(data);
-            // console.log(data.items[0].album);
-            // let oneAlbum = data.items[0].album;
-            // console.log(oneAlbum);
-            // let oneArtistNames = [];
-            // let oneArtistSpotifyIds = [];
-            // oneAlbum.artists.forEach(artist => {
-            //     oneArtistNames.push(artist.name);
-            //     oneArtistSpotifyIds.push(artist.id);
-            // })
-            // let oneTracks = [];
-            // oneAlbum.tracks.items.forEach(track => {
-            //     let trackArtistNames = [];
-            //     let trackArtistSpotifyIds = [];
-            //     track.artists.forEach(trackArtist => {
-            //         trackArtistNames.push(trackArtist.name);
-            //         trackArtistSpotifyIds.push(trackArtist.id);
-            //     })
-            //     oneTracks.push({
-            //         userId:userId,
-            //         spotifyId:track.id,
-            //         title:track.name,
-            //         artistNames:trackArtistNames,
-            //         artistSpotifyIds:trackArtistSpotifyIds,
-            //         albumSpotifyId:oneAlbum.id
-            //     })
-            // });
-            // let theAlbum = {
-            //     userId:userId,
-            //     spotifyId:oneAlbum.id,
-            //     artistNames:oneArtistNames,
-            //     artistSpotifyIds:oneArtistSpotifyIds,
-            //     title:oneAlbum.name,
-            //     tracks:oneTracks,
-            //     img:oneAlbum.images[0].url,
-            //     year:parseInt(oneAlbum.release_date.slice(0,4)),
-            //     type:oneAlbum.type
-            // }
-            // console.log(theAlbum);
-            // await axios.post(`http://localhost:4000/albums/`, theAlbum);
-        data.items.forEach(async item => {
-            let artistNames = [];
-            let artistSpotifyIds = [];
-            item.album.artists.forEach(artist => {
-                artistNames.push(artist.name);
-                artistSpotifyIds.push(artist.id);
-            })
-            let tracks = [];
-            item.album.tracks.items.forEach(track => {
-                let trackArtistNames = [];
-                let trackArtistSpotifyIds = [];
-                track.artists.forEach(trackArtist => {
-                    trackArtistNames.push(trackArtist.name);
-                    trackArtistSpotifyIds.push(trackArtist.id);
-                })
-                tracks.push({
-                    userId:userId,
-                    spotifyId:track.id,
-                    title:track.name,
-                    artistNames:trackArtistNames,
-                    artistSpotifyIds:trackArtistSpotifyIds,
-                    albumSpotifyId:item.album.id
-                })
-            });
-            try {
-                await axios.post(SERVER_URL+`albums/`, {
-                    userId:userId,
-                    spotifyId:item.album.id,
-                    artistNames:artistNames,
-                    artistSpotifyIds:artistSpotifyIds,
-                    title:item.album.name,
-                    tracks: tracks,
-                    img:item.album.images[0].url,
-                    year:parseInt(item.album.release_date.slice(0,4)),
-                    type:item.album.type
-                })
-            } catch(err) {
-                console.log(err);
-            }
+        let data = JSON.parse(this.responseText);
+        console.log(data);
+        data.items.forEach(item => {
+            addAlbumToDatabase(item.album)
         })
-        // }
-        // createNewAlbums();
     }
     else if ( this.status == 401 ){
         // console.log("should refresh token")
+        refreshAccessToken();
+    }
+    else {
+        console.log(this.responseText);
+        alert(this.responseText);
+    }
+}
+
+async function addAlbumToDatabase(album) {
+    let artistNames = [];
+    let artistSpotifyIds = [];
+    album.artists.forEach(artist => {
+        artistNames.push(artist.name);
+        artistSpotifyIds.push(artist.id);
+    })
+    let tracks = [];
+    album.tracks.items.forEach(track => {
+        let trackArtistNames = [];
+        let trackArtistSpotifyIds = [];
+        track.artists.forEach(trackArtist => {
+            trackArtistNames.push(trackArtist.name);
+            trackArtistSpotifyIds.push(trackArtist.id);
+        })
+        tracks.push({
+            userId:userId,
+            spotifyId:track.id,
+            title:track.name,
+            artistNames:trackArtistNames,
+            artistSpotifyIds:trackArtistSpotifyIds,
+            albumSpotifyId:album.id
+        })
+    });
+    try {
+        await axios.post(SERVER_URL+`albums/`, {
+            userId:userId,
+            spotifyId:album.id,
+            artistNames:artistNames,
+            artistSpotifyIds:artistSpotifyIds,
+            title:album.name,
+            tracks:tracks,
+            img:album.images[0].url,
+            year:parseInt(album.release_date.slice(0,4)),
+            type:album.type
+        })
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+
+async function handlePlaylistsResponse() {
+    console.log("playlists status: ", this.status);
+    if ( this.status == 200 ){
+        console.log("playlists status was 200")
+        let data = JSON.parse(this.responseText);
+        console.log(data);
+        data.items.forEach(item => {
+            console.log(item);
+            getPlaylistTracks("ok", item.id);
+            // item.tracks.items.forEach(track => {
+            //     addAlbumToDatabase(track.album)
+            // })
+        })
+    }
+    else if ( this.status == 401 ){
+        console.log("need to refresh access token playlists")
+        refreshAccessToken();
+    }
+    else {
+        console.log("other playlsits error")
+        console.log(this.responseText);
+        alert(this.responseText);
+    }
+}
+
+async function handlePlaylistTracksResponse() {
+    if ( this.status == 200 ){
+        let data = JSON.parse(this.responseText);
+        console.log(data);
+    }
+    else if ( this.status == 401 ){
         refreshAccessToken();
     }
     else {

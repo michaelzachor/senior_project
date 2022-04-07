@@ -102,6 +102,17 @@ router.get("/userdb/:userId", async (req, res) => {
     }
 })
 
+router.get("/userdbCount/:userId", async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.params.userId)
+        const userAlbums = await Album.find({ userId:currentUser._id});
+        const count = userAlbums.length;
+        res.status(200).send(count);
+    } catch(err) {
+        res.status(500).json(err);
+    }
+})
+
 // delete album
 router.delete("/:id", async (req,res) => {
     try {

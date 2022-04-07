@@ -5,6 +5,7 @@ import Home from './containers/Home';
 import Login from './containers/Login';
 import MyMusic from './containers/MyMusic';
 import Signup from './containers/Signup';
+import AddMusic from './components/AddMusic/AddMusic';
 import { AuthContext } from './context/AuthContext';
 import './App.css';
 
@@ -21,6 +22,8 @@ function App() {
           <Route path="/login" exact={true} element={!user ? (<Login />) : (<Navigate to="/"/>)}>
           </Route>
           <Route path="/signup" exact={true} element={!user ? (<Signup />) : (<Navigate to="/"/>)}>
+          </Route>
+          <Route path="/loading" exact={true} element={<AddMusic />}>
           </Route>
         </Routes>
       </Router>
