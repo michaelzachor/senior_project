@@ -1,0 +1,19 @@
+.CountMusic {
+    background: black;
+    height: 100vh;
+}
+
+.NewMusic {
+    background: black;
+    height: 100vh;
+}
+
+.loading {
+    color: #FFEAA0;
+    font-size: 56px;
+    font-weight: bold;
+    padding-top: 30%; 
+    padding-bottom: 15%;
+    text-align: center;
+    text-decoration: none;
+}

@@ -5,21 +5,23 @@ import axios from 'axios';
 const CLIENT_URL = `http://localhost:3000/`
 const SERVER_URL = `http://localhost:4000/`
 
-let redirect_uri = CLIENT_URL;
+let redirect_uri = CLIENT_URL+`loadingNew`;
 
 let client_id = ""; 
 let client_secret = "";
 
 let access_token = null;
 let refresh_token = null;
-let currentPlaylist = "";
+// let currentPlaylist = "";
 let userId = "";
+// let playlistData;
 
 const AUTHORIZE = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token";
 const PLAYLISTS = "https://api.spotify.com/v1/me/playlists";
 const TRACKS = "https://api.spotify.com/v1/playlists/{{PlaylistId}}/tracks";
 const ALBUMS = "https://api.spotify.com/v1/me/albums";
+const FINDALBUM = "https://api.spotify.com/v1/albums/{{AlbumId}}";
 
 
 // AUTHORIZATION
@@ -55,7 +57,7 @@ export function onPageLoad(paramId) {
         console.log("getting albums: ", access_token);
         getAlbums(access_token);
         console.log("getting playlist albums")
-        // getPlaylists(access_token);
+        getPlaylists(access_token);
     }
 }
 
@@ -120,6 +122,7 @@ function handleAuthorizationResponse(){
     }
 }
 
+
 // GET MUSIC
 function callApi(method, url, body, callback, accessToken){
     console.log("callapi accesstoken: ", accessToken);
@@ -139,21 +142,27 @@ function getPlaylists(accessToken) {
     callApi( "GET", PLAYLISTS, null, handlePlaylistsResponse, accessToken );
 }
 
-function getPlaylistTracks(accessToken, playlistID) {
+function getPlaylistTracks(playlistID) {
     let url = TRACKS.replace("{{PlaylistId}}", playlistID);
-    callApi( "GET", url, null, handlePlaylistTracksResponse, accessToken );
+    callApi( "GET", url, null, handlePlaylistTracksResponse, access_token );
+}
+
+function getFindAlbum(albumID) {
+    console.log("finding album id: ",albumID);
+    let url = FINDALBUM.replace("{{AlbumId}}", albumID);
+    callApi( "GET", url, null, handleFindAlbumResponse, access_token );
 }
 
 async function handleAlbumsResponse() {
     console.log("albums status: ", this.status);
-    if ( this.status == 200 ){
+    if ( this.status === 200 ){
         let data = JSON.parse(this.responseText);
         console.log(data);
         data.items.forEach(item => {
             addAlbumToDatabase(item.album)
         })
     }
-    else if ( this.status == 401 ){
+    else if ( this.status === 401 ){
         // console.log("should refresh token")
         refreshAccessToken();
     }
@@ -188,6 +197,17 @@ async function addAlbumToDatabase(album) {
         })
     });
     try {
+        console.log("trying to add ", {
+            userId:userId,
+            spotifyId:album.id,
+            artistNames:artistNames,
+            artistSpotifyIds:artistSpotifyIds,
+            title:album.name,
+            tracks:tracks,
+            img:album.images[0].url,
+            year:parseInt(album.release_date.slice(0,4)),
+            type:album.type
+        });
         await axios.post(SERVER_URL+`albums/`, {
             userId:userId,
             spotifyId:album.id,
@@ -199,6 +219,7 @@ async function addAlbumToDatabase(album) {
             year:parseInt(album.release_date.slice(0,4)),
             type:album.type
         })
+        console.log("tried to add ", album.name);
     } catch(err) {
         console.log(err);
     }
@@ -207,19 +228,22 @@ async function addAlbumToDatabase(album) {
 
 async function handlePlaylistsResponse() {
     console.log("playlists status: ", this.status);
-    if ( this.status == 200 ){
+    if ( this.status === 200 ){
         console.log("playlists status was 200")
         let data = JSON.parse(this.responseText);
+        // playlistData = data;
         console.log(data);
-        data.items.forEach(item => {
-            console.log(item);
-            getPlaylistTracks("ok", item.id);
+        // localStorage.setItem("playlistData",JSON.stringify(playlistData))
+        getPlaylistTracks(data.items[0].id);
+        // data.items.forEach(item => {
+        //     console.log(item);
+            // getPlaylistTracks("ok", item.id);
             // item.tracks.items.forEach(track => {
             //     addAlbumToDatabase(track.album)
             // })
-        })
+        // })
     }
-    else if ( this.status == 401 ){
+    else if ( this.status === 401 ){
         console.log("need to refresh access token playlists")
         refreshAccessToken();
     }
@@ -231,11 +255,28 @@ async function handlePlaylistsResponse() {
 }
 
 async function handlePlaylistTracksResponse() {
-    if ( this.status == 200 ){
+    if ( this.status === 200 ){
         let data = JSON.parse(this.responseText);
-        console.log(data);
+        console.log("playlistTracks: ",data);
+        getFindAlbum(data.items[0].track.album.id);
+        // addAlbumToDatabase(data.items[0])
     }
-    else if ( this.status == 401 ){
+    else if ( this.status === 401 ){
+        refreshAccessToken();
+    }
+    else {
+        console.log(this.responseText);
+        alert(this.responseText);
+    }
+}
+
+async function handleFindAlbumResponse() {
+    if ( this.status === 200) {
+        let data = JSON.parse(this.responseText);
+        console.log("findAlbum: ",data);
+        addAlbumToDatabase(data);
+    }
+    else if (this.status === 401) {
         refreshAccessToken();
     }
     else {
@@ -253,12 +294,12 @@ function refreshAccessToken(){
 }
 
 // function handleAlbumsResponse(){
-//     if ( this.status == 200 ){
+//     if ( this.status === 200 ){
 //         let data = JSON.parse(this.responseText);
 //         console.log(data);
 //         // here's where we're gonna add push new albums with the userId from onpageload params
 //     }
-//     else if ( this.status == 401 ){
+//     else if ( this.status === 401 ){
 //         refreshAccessToken()
 //     }
 //     else {

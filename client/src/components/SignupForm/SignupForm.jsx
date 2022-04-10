@@ -39,8 +39,9 @@ function SignupForm() {
     return (
     <div className="SignupForm">
         <div className="signupLogo">
-            Qt
+            Qtracks
         </div>
+        <div className="signupBlurb">Keep track of the music you listen to on Spotify</div>
         {/* e is the variable from the form that contains all info about the form */}
         <form className="signupForm" onSubmit={handleClick}>
             <div className="signupEmailSection signupSection">

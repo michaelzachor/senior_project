@@ -3,15 +3,16 @@ import axios from "axios";
 import {AuthContext} from '../../context/AuthContext';
 import { requestAuthorization, onPageLoad } from '../../spotifyApiCalls';
 import {useNavigate} from 'react-router-dom'
-import "./addmusic.css";
+import "./loading.css";
 
-function AddMusic() {
+function CountMusic() {
     const SERVER_URL = 'http://localhost:4000/'
     const {user, isFetching, error, dispatch} = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(()=>{
         const fetchUserUnmarkedDB = async () => {
+            // this is just to check the size of userdb so we can either auth Spotify or go straight to '/'
             const res = await axios.get(SERVER_URL+`albums/userdb/${user._id}`);
             let unMarkedData = [];
             let i = 0;
@@ -20,19 +21,17 @@ function AddMusic() {
                 i++;
             }
             if (unMarkedData.length > 50) navigate('/');
-            else {
-                requestAuthorization();
-                onPageLoad();
-                navigate('/');
-            }
+            else requestAuthorization();
         }
         fetchUserUnmarkedDB();
         console.log(user);
     }, [user])
 
     return (
-        <h1>Check</h1>
+        <div className="CountMusic">
+            <div className="loading">Loading...</div>
+        </div>
     )
 }
 
-export default AddMusic;
+export default CountMusic;

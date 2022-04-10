@@ -13,23 +13,22 @@ function LoginForm() {
     const [loggedIn, setLoggedIn] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (loggedIn) {
-            console.log(user);
-            navigate('/loading')
-        }
-    },[loggedIn])
+    // useEffect(() => {
+    //     if (loggedIn) {
+    //         console.log(user);
+    //         navigate('/loading')
+    //     }
+    // },[loggedIn])
 
     const handleClick = (e) => {
         e.preventDefault();
-        loginCall({email:email.current.value,password:password.current.value}, dispatch).then(
-            setLoggedIn(true));
+        loginCall({email:email.current.value,password:password.current.value}, dispatch)
     }
 
     return (
     <div className="LoginForm">
         <div className="loginLogo">
-            Qt
+            Qtracks
         </div>
         {/* e is the variable from the form that contains all info about the form */}
         <form className="loginForm" onSubmit={handleClick}>
@@ -42,7 +41,12 @@ function LoginForm() {
                 <input type="password" name="loginPassword" ref={password} required placeholder="password"/>
             </div>
 
-            <button>Login</button>
+            <div className="buttons">
+                <a href="./signup" className="signupLink">Sign Up</a>
+                <div className="loginLink">
+                    <button>Login</button>
+                </div>
+            </div>
         </form>
     </div>    
 )}

@@ -7,7 +7,7 @@ import "../components/LoginForm/loginform.css"
 function Login() {
     return (
         <div className='Login'>
-            <Header />
+            {/* <Header /> */}
             <LoginForm />
         </div>
     )

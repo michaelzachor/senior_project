@@ -6,8 +6,8 @@ import "../components/SignupForm/signupform.css"
 
 function Signup() {
     return (
-        <div className='Register'>
-            <Header />
+        <div className='Signup'>
+            {/* <Header /> */}
             <SignupForm />
         </div>
     )

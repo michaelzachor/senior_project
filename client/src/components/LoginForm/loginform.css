@@ -4,9 +4,9 @@
 
 .LoginForm {
     height: 100vh;
-    margin: 5px 10px 0 10px;
+    /* margin: 5px 10px 0 10px;
     background: rgba(177, 171, 153, 0.5);
-    border-radius: 5px;
+    border-radius: 5px; */
 }
 
 .loginLogo {
@@ -58,6 +58,13 @@
     color: #ffeaa0;
 }
 
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
 button {
     background-color: #ffeaa0;
     border: none;
@@ -66,9 +73,28 @@ button {
     padding: 12px 24px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    /* display: inline-block; */
     font-size: 16px;
-    display: block;
-    margin: 10px auto;
+    /* display: block; */
+    /* margin: 10px auto; */
     cursor: pointer;
+}
+
+.signupLink {
+    background-color: #ffeaa0;
+    border: none;
+    border-radius: 5px;
+    color: #4B4637;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none; 
+    /* display: inline-block; */
+    font-size: 16px;
+    /* display: block; */
+    /* margin: 10px auto; */
+    cursor: pointer;
+}
+.signupLink:visited {
+    color: #4B4637;
+
 }

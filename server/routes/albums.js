@@ -10,18 +10,37 @@ router.get('/', (req, res) => {
 
 // add album to overall user db
 router.post('/', async (req, res) => {
-    console.log("trying");
+    console.log("trying ", req.body.title);
+    // Album.exists({spotifyId:req.body.spotifyId}, (err, res) => {
+    //     if (err) {
+    //         console.log("err ",req.body.title,err);
+    //         // res.status(400).json(err);
+    //     }
+    //     else {
+    //         const newAlbum = new Album(req.body)
+    //         try{
+    //             const savedAlbum = (async () => await newAlbum.save());
+    //             res.status(200).json(savedAlbum)
+    //         } catch(err) {
+    //             res.status(500).json(err);
+    //         }
+    //     }
+    // })
     let alreadyExists = await Album.exists({spotifyId:req.body.spotifyId}); 
-    if (!alreadyExists) {
-        const newAlbum = new Album(req.body)
-        try{
-            console.log("trying2")
-            const savedAlbum = await newAlbum.save();
-            res.status(200).json(savedAlbum)
-        } catch(err) {
-            res.status(500).json(err);
-        }
-    } 
+    if (alreadyExists) console.log("exists ", req.body.title, alreadyExists);
+    else {
+        console.log("doesn't exist ", req.body.title);
+        if (alreadyExists == null) {
+            const newAlbum = new Album(req.body)
+            try{
+                console.log("trying2")
+                const savedAlbum = await newAlbum.save();
+                res.status(200).json(savedAlbum)
+            } catch(err) {
+                res.status(500).json(err);
+            }
+        } 
+    }
 })
 
 //update album (fix)
@@ -102,16 +121,16 @@ router.get("/userdb/:userId", async (req, res) => {
     }
 })
 
-router.get("/userdbCount/:userId", async (req, res) => {
-    try {
-        const currentUser = await User.findById(req.params.userId)
-        const userAlbums = await Album.find({ userId:currentUser._id});
-        const count = userAlbums.length;
-        res.status(200).send(count);
-    } catch(err) {
-        res.status(500).json(err);
-    }
-})
+// router.get("/userdbCount/:userId", async (req, res) => {
+//     try {
+//         const currentUser = await User.findById(req.params.userId)
+//         const userAlbums = await Album.find({ userId:currentUser._id});
+//         const count = userAlbums.length;
+//         res.status(200).send(count);
+//     } catch(err) {
+//         res.status(500).json(err);
+//     }
+// })
 
 // delete album
 router.delete("/:id", async (req,res) => {
