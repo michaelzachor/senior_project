@@ -91,6 +91,7 @@ input[type='radio'] {
     border: 1px solid #c9c9c9;
     border-radius: 5px;
     padding: 0;
+
 }
 
 .entireTrack {
@@ -117,6 +118,7 @@ input[type='radio'] {
 
 .trackName {
     flex: 15;
+    text-align: left;
 }
 
 .plus {

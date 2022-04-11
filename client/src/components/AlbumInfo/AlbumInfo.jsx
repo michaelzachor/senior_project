@@ -33,6 +33,7 @@ function AlbumInfo(props) {
 
     const [albumTags, setAlbumTags] = useState([]);
     const [trackTags, setTrackTags] = useState([]);
+    const [toggle, setToggle] = useState(false);
 
     // HANDLE TAGS
     const addAlbumTags = event => {
@@ -51,6 +52,7 @@ function AlbumInfo(props) {
             setTrackTags(temp);
             event.target.value = "";
         }
+        setToggle(!toggle);
     }
     const removeTrackTags = (indexToRemove, trackNo) => {
         console.log("removing: ", trackTags[trackNo][indexToRemove])
@@ -60,21 +62,6 @@ function AlbumInfo(props) {
         console.log(tempAll);
         setTrackTags(tempAll);
     }
-
-
-    // useEffect(()=>{
-    //     console.log("onpageload")
-    //     console.log("user._id: ",user._id)
-    //     // onPageLoad();
-    //     onPageLoad(user._id)
-    // }, [])
-
-    // onPageLoad can have parameter user._id
-    // in onPageLoad, if it's the first time, ignore the param
-    //      if it's the second time, set userId = param
-    //      if param is null, do nothing (this takes care of calling onPageLoad within sAC.js)
-    // and now we can add albums with userId=userId if they're not already in there. 
-
 
     // SET USER DB (this is not gonna run until the entire userdb is updated with new stuff from spotify)
     useEffect(()=>{
@@ -91,6 +78,10 @@ function AlbumInfo(props) {
         }
         fetchUserUnmarkedDB();
     }, [])
+
+    useEffect(()=>{
+        console.log("trackTags",trackTags);
+    },[trackTags[0]])
 
     // SET CURRENT ALBUM
     useEffect(()=>{ 
@@ -254,7 +245,7 @@ function AlbumInfo(props) {
                                             <label className="trackRatingLabel">Tags</label>
                                             <div className="tags-input trackRatingInput">
                                                 <ul className="tags">
-                                                    {trackTags && trackTags[i].map((trackTag, jindex) => {
+                                                    {trackTags[i].map((trackTag, jindex) => {
                                                         return (
                                                         <li key={trackTag} className="tag">
                                                             <span className='tag-title'>{trackTag}</span>
