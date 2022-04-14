@@ -3,7 +3,6 @@ import axios from "axios";
 import {FaStar, FaCaretRight, FaCaretLeft} from 'react-icons/fa';
 import {AuthContext} from '../../context/AuthContext';
 import { onPageLoad } from '../../spotifyApiCalls';
-import samplePic from "../../assets/samplePic.jpeg";
 import "./albuminfo.css";
 
 // SHOW ALBUM TRACKS
@@ -34,6 +33,7 @@ function AlbumInfo(props) {
     const [albumTags, setAlbumTags] = useState([]);
     const [trackTags, setTrackTags] = useState([]);
     const [toggle, setToggle] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     // HANDLE TAGS
     const addAlbumTags = event => {
@@ -74,6 +74,7 @@ function AlbumInfo(props) {
                 if (!res.data[i].marked) unMarkedData.push(res.data[i]);
                 i++;
             }
+            unMarkedData.sort((a,b) => a.priority - b.priority);
             setUserdb(unMarkedData);
         }
         fetchUserUnmarkedDB();
@@ -92,6 +93,7 @@ function AlbumInfo(props) {
             props.changeBgImg(userdb[albumCount].img);
         }
         else setCurrentAlbum(null);
+        setIsLoaded(true);
     }, [userdb, albumCount])
 
     // console.log('USERDB: ', userdb);
@@ -117,15 +119,14 @@ function AlbumInfo(props) {
     // PUSH NEW USER DATA TO ALBUM
     const updateAlbum = async (updatedData)=> {
         console.log("in update album: ", currentAlbum._id)
+        console.log("update data: ", updatedData)
         try {
-            console.log(SERVER_URL+`albums/${currentAlbum._id}`)
             await axios.put(SERVER_URL+`albums/${currentAlbum._id}`, { 
                 albumUserData: updatedData[0],
                 tracksUserData: updatedData[1]
             });
             console.log(SERVER_URL+`albums/${currentAlbum._id}`)
         } catch(err) {
-            console.log("in catch")
             console.log(err);
         }
         console.log("still in update album")
@@ -133,14 +134,24 @@ function AlbumInfo(props) {
         // console.log("tried axios put 62465478ee07f5e0649204b5: ",updatedData[1])
     }
 
+    const resetPri = async () => {
+        console.log("in resetPri: ", currentAlbum._id);
+        try {
+            await axios.put(SERVER_URL+`albums/skip/${currentAlbum._id}`, {});
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     // SHOW AN ALBUM
     function renderEachAlbum(album) {
+        if (!album) return null;
         return (
             <div className="albumContent">
                 <div className="albumFront">
 
                     <div className="albumInfo">
-                        <img className="albumCover" alt="album cover" src={album ? album.img : samplePic} onClick={showMore}></img>
+                        <img className="albumCover" alt="album cover" src={album.img} onClick={showMore}></img>
                         <h1 className="albumTitle">{album ? album.title : "loading album title"}</h1>
                         <h2 className="albumArtist">{album ? album.artistNames[0] : "loading artists"}</h2>
                     </div>
@@ -273,11 +284,11 @@ function AlbumInfo(props) {
         )
     }
 
-    return (
+    if (isLoaded) return (
         <div className="AlbumInfo">
 
             <div className="leftArrow" onClick={() => setAlbumCount(albumCount-1)}>
-                <FaCaretLeft size={30} color="black"/>
+                {/* <FaCaretLeft size={30} color="black"/> */}
             </div>
 
             <div className="middleSection">
@@ -292,24 +303,23 @@ function AlbumInfo(props) {
                 while (allTracks[j]) {
                     let jStars = trackRatings[j];
                     let jTags = trackTags[j];
-                    console.log("jS: ",jStars);
-                    console.log("jT: ",jTags);
                     if ((jStars) || (jTags.length > 0) ) {
-                        console.log("jStars or jTags")
                         anyTracksMarked = true;
                         taggedTracks[j] = {rating:jStars, tags:jTags}
                     } 
                     j++;
                 }
-                console.log("tT: ", taggedTracks);
-                console.log("aR: ", albumRating);
-                console.log("aT: ", albumTags);
-                if (albumRating || albumTags.length > 0 || anyTracksMarked) {
+                let albumJournal = document.getElementsByClassName('albumJournal')[0].value;
+                console.log("will update journal: ", albumJournal)
+                if (albumRating || albumTags.length > 0 || anyTracksMarked || albumJournal) {
                     console.log("updating album")
                     updateAlbum([
-                        {rating:albumRating, tags:albumTags},
+                        {rating:albumRating, tags:albumTags, journal:albumJournal},
                         taggedTracks
                     ]);
+                } else {
+                    console.log("resetting priority");
+                    resetPri();
                 }
                 document.getElementsByClassName('albumJournal')[0].value="";
                 setAlbumCount(albumCount+1);
@@ -318,6 +328,7 @@ function AlbumInfo(props) {
             </div>
         </div>
     );
+    else return null;
 }
 
 export default AlbumInfo;

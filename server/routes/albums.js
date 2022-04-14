@@ -53,6 +53,16 @@ router.post('/', async (req, res) => {
 //         res.status(500).json(err);
 //     }
 //   });
+// update album (priority)
+router.put("/skip/:id", async (req, res) => {
+        try {
+            const album = await Album.findById(req.params.id);
+            await album.updateOne({ $set:{priority:1} });
+            res.status(200).json("priority has been reset");
+        } catch (err) {
+            res.status(500).json(err);
+        }
+      });
 
 // update album (log)
 router.put("/:id", async (req, res) => {
@@ -74,7 +84,7 @@ router.put("/:id", async (req, res) => {
                     artistSpotifyIds:album.tracks[i].artistSpotifyIds,
                     albumSpotifyId:album.tracks[i].albumSpotifyId,
                     marked:true,
-                    userData:req.body.tracksUserData[i]
+                    userData:req.body.tracksUserData[i],
                 })
                 //album.tracks[i].marked = true;
                 //album.tracks[i].userData = req.body.tracksUserData[i]

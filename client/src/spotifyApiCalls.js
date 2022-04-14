@@ -258,7 +258,7 @@ async function handlePlaylistTracksResponse() {
     if ( this.status === 200 ){
         let data = JSON.parse(this.responseText);
         console.log("playlistTracks: ",data);
-        getFindAlbum(data.items[0].track.album.id);
+        getFindAlbum(data.items[1].track.album.id);
         // addAlbumToDatabase(data.items[0])
     }
     else if ( this.status === 401 ){
@@ -275,6 +275,7 @@ async function handleFindAlbumResponse() {
         let data = JSON.parse(this.responseText);
         console.log("findAlbum: ",data);
         addAlbumToDatabase(data);
+        console.log("added?");
     }
     else if (this.status === 401) {
         refreshAccessToken();

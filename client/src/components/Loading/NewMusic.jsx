@@ -11,9 +11,14 @@ function NewMusic() {
     const navigate = useNavigate();
 
     useEffect(()=>{
+        async function load() {
+            onPageLoad(user._id);
+        }
         if (user) {
             console.log(user._id);
-            onPageLoad(user._id);
+            load().then(
+                navigate('/home')
+            );
         }
         // const fetchUserUnmarkedDB = async () => {
         //     onPageLoad();

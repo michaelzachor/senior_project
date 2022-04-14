@@ -45,6 +45,11 @@ const AlbumSchema = new mongoose.Schema(
         userData: {
             type: UserData,
             default: {}
+        },
+        priority: {
+            type:Number,
+            // required:true,
+            default:0
         }
     },
     { timestamps:true }

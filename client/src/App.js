@@ -16,15 +16,15 @@ function App() {
     // <div className="App">
       <Router>
         <Routes>
-          <Route path="/" exact={true} element={user ? (<Home />) : (<Navigate to="/login"/>)}>
+          <Route path="/home" exact={true} element={user ? (<Home />) : (<Navigate to="/login"/>)}>
           </Route>
           <Route path="/myMusic" exact={true} element={user ? (<MyMusic />) : (<Navigate to="/login"/>)}>
           </Route>
-          <Route path="/login" exact={true} element={!user ? (<Login />) : (<Navigate to="/loadingCheck"/>)}>
+          <Route path="/login" exact={true} element={!user ? (<Login />) : (<Navigate to="/"/>)}>
           </Route>
           <Route path="/signup" exact={true} element={!user ? (<Signup />) : (<Navigate to="/"/>)}>
           </Route>
-          <Route path="/loadingCheck" exact={true} element={<CountMusic />}>
+          <Route path="/" exact={true} element={user ? (<CountMusic />) : (<Navigate to="/login"/>)}>
           </Route>
           <Route path="/loadingNew" exact={true} element={<NewMusic />}>
           </Route>

@@ -20,7 +20,7 @@ function CountMusic() {
                 if (!res.data[i].marked) unMarkedData.push(res.data[i]);
                 i++;
             }
-            if (unMarkedData.length > 50) navigate('/');
+            if (unMarkedData.length > 50 || localStorage.getItem("access_token")) navigate('/home');
             else requestAuthorization();
         }
         fetchUserUnmarkedDB();

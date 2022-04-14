@@ -18,6 +18,9 @@ const UserDataSchema = new mongoose.Schema(
         },
         tags: {
             type: [String]
+        },
+        journal: {
+            type: String
         }
     },
     { timestamps:true }
