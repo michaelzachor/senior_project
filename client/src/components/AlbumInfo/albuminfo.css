@@ -6,6 +6,7 @@
     padding-bottom: 10px;
     min-height: 100vh;
     position: relative;
+    /* backdrop-filter: brightness(0%); */
 }
 
 .Home:before {
@@ -14,8 +15,11 @@
     z-index: 0;
     width: 100%;
     min-height: 100%;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px) saturate(50%);
+    -webkit-backdrop-filter: blur(20px) saturate(50%);
+    /* backdrop-filter: brightness(50%); */
+    /* filter: brightness(60%); */
+
 }
 
 .AlbumInfo {
@@ -75,6 +79,7 @@
 
 .albumRating {
     display: block;
+    margin-top: 10px;
 }
 
 input[type='radio'] {
@@ -88,15 +93,20 @@ input[type='radio'] {
 
 .albumTrackList {
     list-style-type: none;
-    border: 1px solid #c9c9c9;
+    /* border: 1px solid #c9c9c9; */
+    border: 1px solid black;
     border-radius: 5px;
     padding: 0;
 
 }
 
 .entireTrack {
-    border-bottom: 1px solid #c9c9c9;
+    /* border-bottom: 1px solid #c9c9c9; */
+    border-bottom: 1px solid black;
     padding: 5px;
+}
+.entireTrack:last-child {
+    border-bottom: none;
 }
 /*
 .entireTrack:nth-child(even) {
@@ -109,6 +119,8 @@ input[type='radio'] {
 
 .trackRating {
     display: none;
+    margin-left: 6%;
+    padding-left: 10px;
 }
 
 .trackNo {
@@ -147,13 +159,16 @@ input[type='radio'] {
 
 .albumRatingInput {
     flex: 5;
+    margin-top: 2px;
 }
 
 .textInput {
     border-radius: 5px;
-    border: 1px solid rgb(214, 216, 218);
+    /* border: 1px solid rgb(214, 216, 218); */
+    border: 1px solid black;
     padding: 5px;
     background: rgba(177, 171, 153, 0.5);
+    /* background-color: black; */
     font-family: "Lato", "Helvetica Neue", sans-serif;
     color: black;
 }
@@ -176,20 +191,27 @@ input[type='radio'] {
 
 .trackRatingSection {
     display: flex;
+    margin-top: 6px;
 }
 
 .trackRatingLabel {
+    text-align: left;
     flex: 1;
+    margin-right: 3px;
 }
 
 .trackRatingInput {
+    text-align: left;
     flex: 3;
+    margin-left: 3px;
+    margin-top: 2px;
 }
 
 /*TAGS*/
 .tags-input {
     border-radius: 5px;
-    border: 1px solid rgb(214, 216, 218);
+    /* border: 1px solid rgb(214, 216, 218); */
+    border: 1px solid black;
     background: rgba(177, 171, 153, 0.5);
     padding: 2px;
     /* flex: 5; */
@@ -247,57 +269,12 @@ input[type='radio'] {
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #4B4637;
     opacity: 1; /* Firefox */
-  }
-  
-  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: #4B4637;
-  }
-  
-  ::-ms-input-placeholder { /* Microsoft Edge */
+}
+::-ms-input-placeholder { /* Microsoft Edge */
     color: #4B4637;
-  }
-
-/* ROTATION
-.albumContent {
-    flex: 6;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-}
-.albumContent.flip {
-    transform: rotateY(180deg);
 }
 
-.albumCover {
-    max-width: 200px;
-    margin: 10px auto;
-    display: block;
-}
-
-.albumTitle {
-    text-align: center;
-}
-
-.albumArtist {
-    text-align: center;
-}
-
-.albumFront,
-.albumBack {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  position: absolute;
-}
-
-.albumFront {
-    transform: rotateX(0deg);
-    -webkit-transform: rotateX(0deg);
-}
-
-.albumBack {
-    transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-}
-*/
+/* @media only screen and (min-width: 600px) */

@@ -86,7 +86,7 @@ function AlbumInfo(props) {
 
     // SET CURRENT ALBUM
     useEffect(()=>{ 
-        // console.log("userdb has changed to: ", userdb)
+        console.log("userdb has changed to: ", userdb)
         if (userdb[albumCount]) {
             setCurrentAlbum(userdb[albumCount]);
             updateRatings(userdb[albumCount]);
@@ -172,7 +172,7 @@ function AlbumInfo(props) {
                                             onClick={()=>setAlbumRating(starRatingValue)}
                                         />
                                         <FaStar className="star" 
-                                            color={starRatingValue <= albumRating ? '#ffea00' : 'rgba(177, 171, 153, 0.5)'}
+                                            color={starRatingValue <= albumRating ? '#ffea00' : 'black'}
                                         />
                                     </label>
                                 );
@@ -204,7 +204,7 @@ function AlbumInfo(props) {
                         </div>
                         <div className="albumRatingSection albumJournalSection">
                             <label className="albumRatingLabel journalLabel">Journal</label>
-                            <textarea className='albumJournal albumRatingInput textInput' placeholder=''></textarea>
+                            <textarea className='albumJournal albumRatingInput textInput' placeholder='Review/journal entry'></textarea>
                         </div>
                     </div>
 
