@@ -25,7 +25,14 @@
     transition: 0.3s;
     max-width: 100px;
 }
-.dbAlbumCover:hover {opacity: 0.7;}
+.dbAlbumCover:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.dbAlbumCaption {
+    color: white;
+}
 
 .dbAlbumRatingSection {
     padding: 2px 0 2px 0;
@@ -50,15 +57,18 @@
 
 .dbAlbumTrackList {
     list-style-type: none;
-    border: 1px solid #c9c9c9;
+    border: 1px solid black;
     border-radius: 5px;
     padding: 0;
     margin: 5px 10px;
 }
 
 .dbTrack {
-    border-bottom: 1px solid #c9c9c9;
+    border-bottom: 1px solid black;
     padding: 5px;
+}
+.dbTrack:last-child {
+    border-bottom: none;
 }
 
 .dbTrackNoName {
@@ -92,38 +102,34 @@
 
 .modal {
     display: none;
-    color: #f1f1f1;
+    color: black;
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     /* padding-top: 100px;  */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    height: 100vh; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    /* background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.9);  */
     background-size: 200%;
-    background-repeat: no-repeat;
+    background-repeat: repeat-y;
     background-position: center top;
-    /* backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px); */
 }
 
 .modal:before {
     content: '';
-    position: absolute;
+    position: fixed;
     z-index: 0;
     width: 100%;
-    height: 100%;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    min-height: 100%;
+    backdrop-filter: blur(20px) saturate(50%);
+    -webkit-backdrop-filter: blur(20px) saturate(50%);
 }
 
 .allModalContent {
     z-index: 2;
     position: relative;
-    margin: 55px 10px 5px 10px;
+    margin: 73px 10px 5px 10px;
     padding-top: 10px;
     /* background-color: #B1AB99; */
     background: rgba(177, 171, 153, 0.5);
@@ -137,6 +143,7 @@
     margin: auto;
     padding-bottom: 5px;
 }
+
 
 .albumContent {
     text-align: center;
@@ -167,7 +174,7 @@
     position: absolute;
     top: -5px;
     right: 10px;
-    color: #f1f1f1;
+    color: black;
     font-size: 40px;
     font-weight: bold;
     transition: 0.3s;
@@ -175,7 +182,7 @@
   
   .close:hover,
   .close:focus {
-    color: #bbb;
+    color: #FFEAA0;
     text-decoration: none;
     cursor: pointer;
   }
@@ -186,27 +193,6 @@
     padding: 10px;
 }
 
-.albumsInDB {
-    font-size: 14px;
-}
-
-.albumsInDB ul {
-    list-style-type: none;
-    border: 1px solid #c9c9c9;
-    border-radius: 5px;
-    padding: 0;
-    margin: 5px 10px;
-}
-
-.albumsInDB li {
-    border-bottom: 1px solid #c9c9c9;
-    padding: 5px;
-}
-/*
-.albumsInDB li:nth-child(even) {
-    background-color: #eeeeee;
-}
-*/
 .albumTitleArtist {
     display: flex;
     justify-content: space-between;
@@ -216,13 +202,6 @@
 .albumTitleArtist span {
     /* border: 1px solid orange; */
     padding: 0 2px;
-}
-
-.albumCoverSmall {
-    margin-top: auto;
-    max-width: 40px;
-    /* margin: 10px auto; */
-    display: block;
 }
 
 .albumTitleDB {
@@ -271,4 +250,27 @@
 
 .trackTagsDB {
     flex: 6;
+}
+
+@media only screen and (min-width: 850px) {
+    .allModalContent {
+        margin: 73px 70px 5px 70px;
+    }
+    .albumCoverModal {
+        width: 60%;
+        height: auto;
+    }
+    .dbAlbumTracks {
+        width: 60%;
+        margin: auto;
+    }
+    .modal {
+        background-size: 100%;
+        background-repeat: repeat-y;
+        background-position: center center;
+    }
+    .dbAlbumCover {
+        transition: 0.3s;
+        max-width: 150px;
+    }
 }

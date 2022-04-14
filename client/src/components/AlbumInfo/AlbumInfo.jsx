@@ -218,8 +218,13 @@ function AlbumInfo(props) {
                                         <span className="plus" onClick={()=> {
                                             let thisEl = document.getElementsByClassName("albumTracks")[0];
                                             let tRating = thisEl.getElementsByClassName("trackRating")[i];
-                                            if (tRating.style.display === "none") tRating.style.display = "block";
-                                            else tRating.style.display = "none";
+                                            if (tRating.style.display === "none") {
+                                                tRating.style.display = "block";
+                                                document.getElementsByClassName("plus")[i].innerHTML = '-&nbsp;';
+                                            } else {
+                                                tRating.style.display = "none";
+                                                document.getElementsByClassName("plus")[i].innerHTML = '+';
+                                            }
                                         }}>+</span>
                                     </div>
 

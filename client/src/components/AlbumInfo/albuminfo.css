@@ -64,6 +64,9 @@
     margin: 10px auto;
     display: block;
 } 
+.albumCover:hover {
+    cursor: pointer;
+}
 
 .albumTitle {
     text-align: center;
@@ -121,6 +124,7 @@ input[type='radio'] {
     display: none;
     margin-left: 6%;
     padding-left: 10px;
+    margin-top: 12px;
 }
 
 .trackNo {
@@ -138,6 +142,9 @@ input[type='radio'] {
     width: 100%;
     /* margin: auto 0px auto 10px; */
     flex: 1;
+}
+.plus:hover {
+    cursor: pointer;
 }
 /*
 .albumRating {
@@ -225,6 +232,7 @@ input[type='radio'] {
     border: none;
     background: none;
     color: black;
+    width: 100%;
 }
 .tags-input input:focus {
     outline: transparent;
@@ -277,4 +285,38 @@ input[type='radio'] {
     color: #4B4637;
 }
 
-/* @media only screen and (min-width: 600px) */
+@media only screen and (min-width: 850px) {
+    .Home {
+        background-size: 100%;
+        background-repeat: repeat-y;
+        background-position: center center;
+    }
+    .AlbumInfo {
+        min-height: 90vh;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-flow: row nowrap;
+        margin: 5px 70px 0 70px;
+        /* background-color: #B1AB99; */
+        background: rgba(177, 171, 153, 0.5);
+        border-radius: 5px;
+    }
+    
+    .albumCover {
+        width: 50%;
+        margin: 10px auto;
+    } 
+
+    .albumRating {
+        display: block;
+        margin: auto;
+        margin-top: 10px;
+        width: 50%;
+    }
+
+    .albumTracks {
+        width: 50%;
+        margin: auto;
+    }
+}

@@ -40,7 +40,7 @@ function AlbumsInDB() {
 
     return (
     <div className='AlbumsInDB'>
-        <h2 className='dbSectionTitle'>Recently Logged</h2>
+        {/* <h2 className='dbSectionTitle'>Recently Logged</h2> */}
         <div className="dbAlbums">
             {userdb && userdb.map((album, i) => (
                 <div key={album.spotifyId} className="dbAlbum">

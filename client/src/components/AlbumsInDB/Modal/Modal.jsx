@@ -28,7 +28,7 @@ function Modal(props) {
                                 {album && [...Array(5)].map((star, i) => {
                                     const rating = album.userData.rating;
                                     return (
-                                        <FaStar key={i} color={i+1 <= rating ? '#ffea00' : '#e4e5e9'} />
+                                        <FaStar key={i} color={i+1 <= rating ? '#ffea00' : 'black'} />
                                 )})}
                             </div>
                             <div className="dbAlbumRatingSection dbAlbumTagsSection">
