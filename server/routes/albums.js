@@ -4,7 +4,9 @@ const User = require("../models/User");
 const Album = require("../models/Album");
 const cors = require('cors');
 
-router.use(cors());
+// router.use(cors());
+router.use(cors({origin: /\.herokuapp\.com$/}));
+
 // check if working 
 router.get('/', (req, res) => {
     res.send("Hello it's album routes"); //runs if we make a get request

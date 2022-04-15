@@ -6,8 +6,10 @@ const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
 const albumRoute = require("./routes/albums")
 const cors = require("cors");
-
 const app = express();
+
+app.use(cors({origin: /\.herokuapp\.com$/}));
+
 
 dotenv.config();
 const port = process.env.PORT || 4000;
@@ -35,7 +37,6 @@ const corsOptions = {
 }
 
 // app.use(cors(corsOptions));
-app.use(cors());
 
 // app.use(cors({
 //   origin: '*',
