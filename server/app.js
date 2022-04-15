@@ -10,7 +10,6 @@ const app = express();
 
 app.use(cors({origin: /\.herokuapp\.com$/}));
 
-
 dotenv.config();
 const port = process.env.PORT || 4000;
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true}, () => {
@@ -19,15 +18,15 @@ mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopolo
 
 app.use(express.json())
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", 'https://warm-jelly-6d1ccf.netlify.app');
-    res.header(
-      "Access-Control-Allow-Headers",
-      // "Origin, X-Requested-With, Content-Type, Accept"
-      "*"
-    );
-    next();
-});
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", 'https://warm-jelly-6d1ccf.netlify.app');
+//     res.header(
+//       "Access-Control-Allow-Headers",
+//       // "Origin, X-Requested-With, Content-Type, Accept"
+//       "*"
+//     );
+//     next();
+// });
 
 const corsOptions = {
   origin: ['https://warm-jelly-6d1ccf.netlify.app','https://warm-jelly-6d1ccf.netlify.app/home'],
