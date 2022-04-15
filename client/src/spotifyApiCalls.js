@@ -224,7 +224,10 @@ async function handlePlaylistsResponse() {
     if ( this.status === 200 ){
         let data = JSON.parse(this.responseText);
         console.log(data);
-        getPlaylistTracks(data.items[0].id);
+        for (item in data.items) {
+            getPlaylistTracks(item.id);
+        }
+        // getPlaylistTracks(data.items[0].id);
     }
     else if ( this.status === 401 ){
         refreshAccessToken();
@@ -238,7 +241,12 @@ async function handlePlaylistTracksResponse() {
     if ( this.status === 200 ){
         let data = JSON.parse(this.responseText);
         console.log("playlistTracks: ",data);
-        getFindAlbum(data.items[1].track.album.id);
+        for (let i = 0; i < 5; i++) {
+            if (data.items[i]) {
+                getFindAlbum(data.items[i].track.album.id);
+            }
+        }
+        // getFindAlbum(data.items[0].track.album.id);
         // addAlbumToDatabase(data.items[0])
     }
     else if ( this.status === 401 ){
