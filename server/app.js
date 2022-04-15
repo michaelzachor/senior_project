@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopolo
 app.use(express.json())
 
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", ['https://warm-jelly-6d1ccf.netlify.app','https://warm-jelly-6d1ccf.netlify.app/home']);
+    res.header("Access-Control-Allow-Origin", 'https://warm-jelly-6d1ccf.netlify.app');
     res.header(
       "Access-Control-Allow-Headers",
       // "Origin, X-Requested-With, Content-Type, Accept"
