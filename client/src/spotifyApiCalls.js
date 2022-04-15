@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// const CLIENT_URL = `https://warm-jelly-6d1ccf.netlify.app/`
-// const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
-const CLIENT_URL = `http://localhost:3000/`
-const SERVER_URL = `http://localhost:4000/`
+const CLIENT_URL = `https://warm-jelly-6d1ccf.netlify.app/`
+const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+// const CLIENT_URL = `http://localhost:3000/`
+// const SERVER_URL = `http://localhost:4000/`
 
 let redirect_uri = CLIENT_URL+`loadingNew`;
 
@@ -28,8 +28,6 @@ const FINDALBUM = "https://api.spotify.com/v1/albums/{{AlbumId}}";
 export function requestAuthorization(){
     client_id = process.env.REACT_APP_CLIENT_ID;
     client_secret = process.env.REACT_APP_CLIENT_SECRET;
-    console.log(client_id);
-    console.log(client_secret);
     localStorage.setItem("client_id", client_id);
     localStorage.setItem("client_secret", client_secret); // In a real app you should not expose your client_secret to the user
 
@@ -54,7 +52,7 @@ export function onPageLoad(paramId) {
     }
     else{
         access_token = localStorage.getItem("access_token");
-        console.log("getting albums: ", access_token);
+        console.log("getting albums");
         getAlbums(access_token);
         console.log("getting playlist albums")
         getPlaylists(access_token);
@@ -104,7 +102,6 @@ function handleAuthorizationResponse(){
     console.log("handleAuth");
     if ( this.status === 200 ){
         var data = JSON.parse(this.responseText);
-        console.log(data);
         if ( data.access_token !== undefined ){
             access_token = data.access_token;
             localStorage.setItem("access_token", access_token);
@@ -117,7 +114,6 @@ function handleAuthorizationResponse(){
         onPageLoad(null);
     }
     else {
-        console.log(this.responseText);
         alert(this.responseText);
     }
 }
@@ -125,7 +121,6 @@ function handleAuthorizationResponse(){
 
 // GET MUSIC
 function callApi(method, url, body, callback, accessToken){
-    console.log("callapi accesstoken: ", accessToken);
     let xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -154,7 +149,6 @@ function getFindAlbum(albumID) {
 }
 
 async function handleAlbumsResponse() {
-    console.log("albums status: ", this.status);
     if ( this.status === 200 ){
         let data = JSON.parse(this.responseText);
         console.log(data);
@@ -163,11 +157,9 @@ async function handleAlbumsResponse() {
         })
     }
     else if ( this.status === 401 ){
-        // console.log("should refresh token")
         refreshAccessToken();
     }
     else {
-        console.log(this.responseText);
         alert(this.responseText);
     }
 }
@@ -206,7 +198,8 @@ async function addAlbumToDatabase(album) {
             tracks:tracks,
             img:album.images[0].url,
             year:parseInt(album.release_date.slice(0,4)),
-            type:album.type
+            type:album.type,
+            priority:0
         });
         await axios.post(SERVER_URL+`albums/`, {
             userId:userId,
@@ -217,7 +210,8 @@ async function addAlbumToDatabase(album) {
             tracks:tracks,
             img:album.images[0].url,
             year:parseInt(album.release_date.slice(0,4)),
-            type:album.type
+            type:album.type,
+            priority:0
         })
         console.log("tried to add ", album.name);
     } catch(err) {
@@ -227,29 +221,15 @@ async function addAlbumToDatabase(album) {
 
 
 async function handlePlaylistsResponse() {
-    console.log("playlists status: ", this.status);
     if ( this.status === 200 ){
-        console.log("playlists status was 200")
         let data = JSON.parse(this.responseText);
-        // playlistData = data;
         console.log(data);
-        // localStorage.setItem("playlistData",JSON.stringify(playlistData))
         getPlaylistTracks(data.items[0].id);
-        // data.items.forEach(item => {
-        //     console.log(item);
-            // getPlaylistTracks("ok", item.id);
-            // item.tracks.items.forEach(track => {
-            //     addAlbumToDatabase(track.album)
-            // })
-        // })
     }
     else if ( this.status === 401 ){
-        console.log("need to refresh access token playlists")
         refreshAccessToken();
     }
     else {
-        console.log("other playlsits error")
-        console.log(this.responseText);
         alert(this.responseText);
     }
 }
@@ -265,7 +245,6 @@ async function handlePlaylistTracksResponse() {
         refreshAccessToken();
     }
     else {
-        console.log(this.responseText);
         alert(this.responseText);
     }
 }
@@ -281,7 +260,6 @@ async function handleFindAlbumResponse() {
         refreshAccessToken();
     }
     else {
-        console.log(this.responseText);
         alert(this.responseText);
     }
 }

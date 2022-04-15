@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext} from 'react';
 import axios from "axios";
 import {FaStar, FaCaretRight, FaCaretLeft} from 'react-icons/fa';
 import {AuthContext} from '../../context/AuthContext';
-import { onPageLoad } from '../../spotifyApiCalls';
+import {useNavigate} from 'react-router-dom'
 import "./albuminfo.css";
 
 // SHOW ALBUM TRACKS
@@ -19,8 +19,8 @@ function showMore() {
 }
 
 function AlbumInfo(props) {
-    // const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
-    const SERVER_URL = `http://localhost:4000/`
+    const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+    // const SERVER_URL = `http://localhost:4000/`
     const { user } = useContext(AuthContext);
 
     const [userdb, setUserdb] = useState([]);
@@ -34,6 +34,8 @@ function AlbumInfo(props) {
     const [trackTags, setTrackTags] = useState([]);
     const [toggle, setToggle] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    const navigate = useNavigate();
+
 
     // HANDLE TAGS
     const addAlbumTags = event => {
@@ -55,11 +57,9 @@ function AlbumInfo(props) {
         setToggle(!toggle);
     }
     const removeTrackTags = (indexToRemove, trackNo) => {
-        console.log("removing: ", trackTags[trackNo][indexToRemove])
         let temp = trackTags[trackNo].filter((_, index) => index !== indexToRemove);
         let tempAll = trackTags;
         tempAll[trackNo] = temp;
-        console.log(tempAll);
         setTrackTags(tempAll);
     }
 
@@ -81,7 +81,6 @@ function AlbumInfo(props) {
     }, [])
 
     useEffect(()=>{
-        console.log("trackTags",trackTags);
     },[trackTags[0]])
 
     // SET CURRENT ALBUM
@@ -92,11 +91,12 @@ function AlbumInfo(props) {
             updateRatings(userdb[albumCount]);
             props.changeBgImg(userdb[albumCount].img);
         }
-        else setCurrentAlbum(null);
+        else {
+            setCurrentAlbum(null);
+            if (albumCount > 0) navigate('/loadingNew');
+        }
         setIsLoaded(true);
     }, [userdb, albumCount])
-
-    // console.log('USERDB: ', userdb);
 
     // RESET RATINGS ON NEW ALBUM
     function updateRatings(album) {
@@ -114,13 +114,12 @@ function AlbumInfo(props) {
         }
     }
 
-    // if (currentAlbum) console.log("cAId: ",currentAlbum._id);
-
     // PUSH NEW USER DATA TO ALBUM
     const updateAlbum = async (updatedData)=> {
         console.log("in update album: ", currentAlbum._id)
         console.log("update data: ", updatedData)
         try {
+            console.log("in update try");
             await axios.put(SERVER_URL+`albums/${currentAlbum._id}`, { 
                 albumUserData: updatedData[0],
                 tracksUserData: updatedData[1]
@@ -130,8 +129,6 @@ function AlbumInfo(props) {
             console.log(err);
         }
         console.log("still in update album")
-        // console.log("userDataAlbum: ", updatedData[0]);
-        // console.log("tried axios put 62465478ee07f5e0649204b5: ",updatedData[1])
     }
 
     const resetPri = async () => {
@@ -184,7 +181,6 @@ function AlbumInfo(props) {
                             <div className="tags-input albumRatingInput">
                                 <ul id="tags">
                                     {albumTags.map((albumTag, index) => {
-                                        console.log(albumTags[index])
                                         return (
                                         <li key={albumTag} className="tag">
                                             <span className='tag-title'>{albumTag}</span>
@@ -315,7 +311,6 @@ function AlbumInfo(props) {
                     j++;
                 }
                 let albumJournal = document.getElementsByClassName('albumJournal')[0].value;
-                console.log("will update journal: ", albumJournal)
                 if (albumRating || albumTags.length > 0 || anyTracksMarked || albumJournal) {
                     console.log("updating album")
                     updateAlbum([

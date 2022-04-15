@@ -6,7 +6,8 @@ import {useNavigate} from 'react-router-dom'
 import "./loading.css";
 
 function CountMusic() {
-    const SERVER_URL = 'http://localhost:4000/'
+    const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+    // const SERVER_URL = 'http://localhost:4000/'
     const {user, isFetching, error, dispatch} = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -17,10 +18,12 @@ function CountMusic() {
             let unMarkedData = [];
             let i = 0;
             while (res.data[i]) {
-                if (!res.data[i].marked) unMarkedData.push(res.data[i]);
+                if (!res.data[i].marked && !res.data[i].priority) unMarkedData.push(res.data[i]);
                 i++;
             }
-            if (unMarkedData.length > 50 || localStorage.getItem("access_token")) navigate('/home');
+            console.log("count: ", unMarkedData);
+            if (unMarkedData.length > 50) navigate('/home');
+            else if (localStorage.getItem("access_token") && localStorage.getItem("refresh_token")) navigate('/loadingNew');
             else requestAuthorization();
         }
         fetchUserUnmarkedDB();
