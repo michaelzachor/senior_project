@@ -28,10 +28,10 @@ app.use(function (req, res, next) {
 });
 
 const corsOptions = {
-  origin: '*',
+  origin: ['https://https://warm-jelly-6d1ccf.netlify.app/','https://https://warm-jelly-6d1ccf.netlify.app/home'],
   preflightContinue:false,
   credentials:true,
-  methods: '*'
+  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }
 
 app.use(cors(corsOptions));
