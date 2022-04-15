@@ -28,7 +28,7 @@ app.use(function (req, res, next) {
 });
 
 const corsOptions = {
-  origin: ['https://https://warm-jelly-6d1ccf.netlify.app/','https://https://warm-jelly-6d1ccf.netlify.app/home'],
+  origin: ['https://warm-jelly-6d1ccf.netlify.app','https://warm-jelly-6d1ccf.netlify.app/home'],
   preflightContinue:false,
   credentials:true,
   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
