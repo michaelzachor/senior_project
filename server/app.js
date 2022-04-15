@@ -27,11 +27,20 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(cors({
+const corsOptions = {
   origin: '*',
-  // methods: '*'
-  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
-}))
+  preflightContinue:false,
+  credentials:true,
+  methods: '*'
+}
+
+app.use(cors(corsOptions));
+
+// app.use(cors({
+//   origin: '*',
+//   // methods: '*'
+//   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+// }))
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('../client/build'))
