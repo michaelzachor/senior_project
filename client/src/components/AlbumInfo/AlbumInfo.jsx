@@ -19,8 +19,8 @@ function showMore() {
 }
 
 function AlbumInfo(props) {
-    // const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
-    const SERVER_URL = `http://localhost:4000/`
+    const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+    // const SERVER_URL = `http://localhost:4000/`
     const { user } = useContext(AuthContext);
 
     const [userdb, setUserdb] = useState([]);

@@ -5,8 +5,8 @@ import {FaAt, FaLock} from 'react-icons/fa';
 import "./signupform.css"
 
 function SignupForm() {
-    // const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
-    const SERVER_URL = `http://localhost:4000/`
+    const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+    // const SERVER_URL = `http://localhost:4000/`
     const email = useRef();
     const password = useRef();
     const passwordAgain = useRef();

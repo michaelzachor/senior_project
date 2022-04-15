@@ -5,8 +5,8 @@ import Modal from './Modal/Modal'
 import {AuthContext} from '../../context/AuthContext'
 
 function AlbumsInDB() {
-    // const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
-    const SERVER_URL = `http://localhost:4000/`
+    const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+    // const SERVER_URL = `http://localhost:4000/`
 
     const [userdb, setUserdb] = useState([]);
     const [modalAlbum, setModalAlbum] = useState(null);
