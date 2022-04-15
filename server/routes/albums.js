@@ -5,7 +5,7 @@ const Album = require("../models/Album");
 const cors = require('cors');
 
 // router.use(cors());
-router.use(cors({origin: /\.herokuapp\.com$/}));
+router.use(cors());
 
 // router.use(function (req, res, next) {
 //     res.header("Access-Control-Allow-Origin", 'https://warm-jelly-6d1ccf.netlify.app');

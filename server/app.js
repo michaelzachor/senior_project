@@ -8,7 +8,7 @@ const albumRoute = require("./routes/albums")
 const cors = require("cors");
 const app = express();
 
-app.use(cors({origin: /\.herokuapp\.com$/}));
+app.use(cors());
 
 dotenv.config();
 const port = process.env.PORT || 4000;
