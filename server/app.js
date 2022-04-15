@@ -34,7 +34,8 @@ const corsOptions = {
   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
 
 // app.use(cors({
 //   origin: '*',

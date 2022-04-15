@@ -2,7 +2,9 @@ const router = require("express").Router();
 // const Post = require("../models/Post");
 const User = require("../models/User");
 const Album = require("../models/Album");
+const cors = require('cors');
 
+router.use(cors());
 // check if working 
 router.get('/', (req, res) => {
     res.send("Hello it's album routes"); //runs if we make a get request
