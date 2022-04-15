@@ -6,8 +6,8 @@ import {useNavigate} from 'react-router-dom'
 import "./loading.css";
 
 function CountMusic() {
-    const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
-    // const SERVER_URL = 'http://localhost:4000/'
+    // const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+    const SERVER_URL = 'http://localhost:4000/'
     const {user, isFetching, error, dispatch} = useContext(AuthContext);
     const navigate = useNavigate();
 

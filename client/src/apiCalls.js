@@ -4,8 +4,8 @@ import {requestAuthorization} from './spotifyApiCalls'
 
 
 export const loginCall = async (userCredentials, dispatch) => {
-    const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
-    // const SERVER_URL = `http://localhost:4000/`
+    // const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
+    const SERVER_URL = `http://localhost:4000/`
 
     // const navigate = useNavigate();
     dispatch({ type: "LOGIN_START"});
