@@ -23,12 +23,12 @@
 }
 
 .AlbumInfo {
-    min-height: 90vh;
+    min-height: 88vh;
     position: relative;
     z-index: 1;
     display: flex;
     flex-flow: row nowrap;
-    margin: 5px 10px 0 10px;
+    margin: 2vh 3vw 0 3vw;
     /* background-color: #B1AB99; */
     background: rgba(177, 171, 153, 0.5);
     border-radius: 5px;
@@ -37,7 +37,7 @@
 .leftArrow {
     padding-top: 50vh;
     flex: 1;
-    margin: 10px;
+    /* margin: 10px; */
     text-align: left;
     /* border: 1px solid red; */
 }
@@ -45,23 +45,24 @@
 .rightArrow {
     padding-top: 50vh;
     flex: 1;
-    margin: 10px;
+    /* margin: 10px; */
     text-align: right;
+    margin: 0;
     /* border: 1px solid red; */
 }
 
 .middleSection {
-    flex: 8;
+    flex: 9;
 }
 
 .albumContent {
-    margin: 10px;
+    /* margin: 1vh; */
 }
 
 .albumCover {
     /* max-width: 200px; */
     width: 100%;
-    margin: 10px auto;
+    margin: 4vh auto auto auto;
     display: block;
 } 
 .albumCover:hover {
@@ -70,10 +71,12 @@
 
 .albumTitle {
     text-align: center;
+    margin-top: 1vh;
 }
 
 .albumArtist {
     text-align: center;
+    margin-top: 1vh;
 }
 
 .albumTracks {
@@ -82,7 +85,7 @@
 
 .albumRating {
     display: block;
-    margin-top: 10px;
+    margin-top: 3vh;
 }
 
 input[type='radio'] {

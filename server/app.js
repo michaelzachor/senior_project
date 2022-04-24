@@ -8,7 +8,13 @@ const albumRoute = require("./routes/albums")
 const cors = require("cors");
 const app = express();
 
-app.use(cors());
+// app.use(cors());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 dotenv.config();
 const port = process.env.PORT || 4000;
@@ -29,7 +35,7 @@ app.use(express.json())
 // });
 
 const corsOptions = {
-  origin: ['https://warm-jelly-6d1ccf.netlify.app','https://warm-jelly-6d1ccf.netlify.app/home'],
+  origin: ['https://qtracks.netlify.app','https://qtracks.netlify.app/home'],
   preflightContinue:false,
   credentials:true,
   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']

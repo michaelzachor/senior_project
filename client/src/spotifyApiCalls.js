@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// const CLIENT_URL = `https://warm-jelly-6d1ccf.netlify.app/`
+// const CLIENT_URL = `https://qtracks.netlify.app/`
 const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
 const CLIENT_URL = `http://localhost:3000/`
 // const SERVER_URL = `http://localhost:4000/`
@@ -224,9 +224,9 @@ async function handlePlaylistsResponse() {
     if ( this.status === 200 ){
         let data = JSON.parse(this.responseText);
         console.log(data);
-        for (item in data.items) {
-            getPlaylistTracks(item.id);
-        }
+        // for (item in data.items) {
+        //     getPlaylistTracks(item.id);
+        // }
         // getPlaylistTracks(data.items[0].id);
     }
     else if ( this.status === 401 ){
