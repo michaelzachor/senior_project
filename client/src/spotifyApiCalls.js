@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-// const CLIENT_URL = `https://qtracks.netlify.app/`
+const CLIENT_URL = `https://qtracks.netlify.app/`
 const SERVER_URL = `https://seniorproject-michaelzachor.herokuapp.com/`
-const CLIENT_URL = `http://localhost:3000/`
+// const CLIENT_URL = `http://localhost:3000/`
 // const SERVER_URL = `http://localhost:4000/`
 
 let redirect_uri = CLIENT_URL+`loadingNew`;
