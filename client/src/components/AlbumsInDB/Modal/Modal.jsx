@@ -39,6 +39,12 @@ function Modal(props) {
                                     )})}
                                 </ul>
                             </div>
+                            <div className="dbAlbumRatingSection dbAlbumJournalSection">
+                                {album && album.userData.journal != "" && 
+                                <div className="dbAlbumJournal">
+                                    {album.userData.journal}
+                                </div>}
+                            </div>
                         </div>
                         <div className="dbAlbumTracks">
                             <ul className="dbAlbumTrackList">
@@ -54,7 +60,7 @@ function Modal(props) {
                                                 {track.userData.rating && [...Array(5)].map((star, s) => {
                                                     const rating_t = track.userData.rating;
                                                     return (
-                                                        <FaStar key={s} color={s+1 <= rating_t ? '#ffea00' : '#e4e5e9'} />
+                                                        <FaStar key={s} color={s+1 <= rating_t ? '#ffea00' : 'black'} />
                                                 )})} 
                                             </div>
                                             <div className="dbTrackTagsSection">

@@ -23,6 +23,7 @@ function AlbumsInDB() {
                 if (res.data[i].marked) markedData.push(res.data[i]);
                 i++;
             }
+            markedData.sort((a,b) => new Date(b.userData.updatedAt) - new Date(a.userData.updatedAt));
             setUserdb(markedData);
         }
         fetchUserdb();
